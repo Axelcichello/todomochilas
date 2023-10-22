@@ -1,7 +1,7 @@
 <header class="header">
         <div class="contenedor contenido-header">
             <div class="barra">
-                <a href="admin-inicio.php" class="marca">TodoMochilasADM</a>
+                <a href="dashboard-admin.php" class="marca">TodoMochilasADM</a>
 
 
                 <nav class="navegacion">

@@ -41,8 +41,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $respuesta = mysqli_query($conexion, $query);
 
-        debuguear($respuesta);
 
+        if($respuesta == TRUE){ ?>
+
+            <div class="notificacion exito">
+                <p>Proveedor registrado correctamente</p>
+            </div>
+
+       <?php }
     }
 }
 ?>
