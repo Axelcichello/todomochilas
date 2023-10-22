@@ -1,0 +1,311 @@
+/* VARIABLES GENERALES */
+
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    font-size: 1.6rem;
+    line-height: 1.8;
+}
+
+p {
+    color: #000000;
+    font-size: 2rem;
+}
+
+a {
+    text-decoration: none;
+    
+}
+
+img,
+picture {
+    width: 100%;
+    display: block;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+}
+
+h1 {
+    font-size: 3.8rem;
+    margin-top: 0;
+}
+
+h2 {
+    font-size: 3.4rem;
+}
+
+h3 {
+    font-size: 3rem;
+}
+
+h4 {
+    font-size: 2.6rem;
+}
+
+th{
+    text-align: center;
+    text-transform: capitalize;
+}
+
+td{
+    text-align: center;
+    text-transform: none;
+}
+
+
+/*
+
+tr{
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+*/
+
+tr:nth-child(even){
+    background-color: gainsboro;
+}
+
+.contenedor {
+    width: 95%;
+    max-width: 120rem;
+    margin: 0 auto;
+}
+
+.header{
+    background-color: #333;
+    padding: 1rem 0 3rem;
+}
+
+.contenido-header{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.barra{
+    align-items: center;    
+    display: flex;
+    flex-direction: column;
+    padding-top: 3rem;
+}
+
+@media screen and (min-width: 768px){
+    .barra{
+        align-items: flex-end;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .derecha{
+        align-items: flex-end;
+    }
+}
+
+
+.marca{
+    color: white;
+    font-size: 3.8rem;
+}
+
+.pestana{
+    color: white;
+    margin: 1rem;
+    font-size: 2.5rem;
+}
+
+/* MAIN */
+
+.seccion{
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+}
+
+.boton-verde{
+    margin-bottom: 2rem;
+        background-color: green;
+        border: none;
+        color: white;
+        display: inline-block;
+        font-weight: 700;
+        margin-top: 2.5rem;
+        padding: 1rem 3rem;
+        text-align: center;
+        text-decoration: none;
+}
+
+table.ventas{
+    border-spacing: 0;
+    margin-top: 4rem;
+    width: 100%;
+}
+
+table.ventas thead{
+    background-color: green;
+}
+
+table.ventas thead th{
+    color: white;
+    padding: 2rem;
+}
+
+.w-100{
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.boton-rojo-block{
+    background-color: red;
+    border: none;
+    color: white;
+    display: block;
+    font-weight: 700;
+    padding: 1rem 3rem;
+    text-align: center;
+    text-decoration: none;
+    width: 100%;
+    text-transform: uppercase;
+}
+
+.boton-naranja-block{
+    background-color: orange;
+    border: none;
+    color: white;
+    display: block;
+    font-weight: 700;
+    margin-top: 2.5rem;
+    padding: 1rem 3rem;
+    text-align: center;
+    text-decoration: none;
+    width: 100%;
+    text-transform: uppercase;
+}
+
+.titulo-table{
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: bold;
+}
+
+.subtitulo{
+    color: black;
+    text-transform: uppercase;
+    text-align: center;
+    
+}
+
+/* FORMULARIO */
+
+.subtitulo{
+    color: black;
+    text-transform: uppercase;
+}
+
+.formulario p {
+    font-size: 1.4rem;
+    color: grey;
+    margin: 2rem 0 0 0;
+}
+
+.formulario legend {
+    font-size: 2rem;
+    color: grey;
+}
+
+.formulario label {
+    font-weight: bold;
+    text-transform: uppercase;
+    display: block;
+}
+
+.formulario input:not([type="submit"]),
+.formulario textarea,
+.formulario select {
+
+    padding: 1rem;
+    display: block;
+    width: 100%;
+    background-color: white;
+    border: 1px solid grey;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+}
+
+.formulario textarea {
+    height: 20rem;
+}
+
+.formulario .especifico p {
+    margin-top: 0;
+}
+
+.formulario .especifico .similitud {
+    max-width: 30rem;
+    display: flex;
+    align-items: center;
+}
+
+
+.formulario .especifico .similitud input{
+    margin: 0;
+}
+
+form .boton-amarillo{
+    margin-top: 3rem;
+    padding: 1rem;
+    font-size: 2rem;
+    cursor: pointer;
+    background-color: orange;
+    text-transform: uppercase;
+    font-weight: bold;
+    
+}
+
+.indices {
+    display: flex;
+    justify-content: center;
+}
+
+.indices a{
+    font-size: 2rem;
+    margin-top: 2rem;
+    margin-right: 1rem;
+    text-decoration: none;
+    color: green;
+}
+
+.notificacion{
+    text-align: center;
+    font-size: 3rem;
+    text-transform: uppercase;
+}
+
+.error{
+    background-color: #F81717;
+}
+
+.exito{
+    background-color: #51DD19;
+
+}
+
+.notificacion p{
+    color: white;
+}
