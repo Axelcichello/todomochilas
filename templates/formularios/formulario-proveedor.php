@@ -1,8 +1,10 @@
 <?php
 
+//Si se entra mediante un POST pasara a la parte de saneo, validacion e insersion en la BBDD
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+    //Etapa de saneo
 
     $nombre = saneoString($_POST['nombre'], $caracteresEspeciales);
 
@@ -13,6 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $direccion = saneoString($_POST['direccion'], $caracteresEspeciales);
 
     $localidad = saneoString($_POST['localidad'], $caracteresEspeciales);
+
+    //Etapa de validacion
 
     if (!isset($nombre) || $nombre === '') {
         array_push($errores, "El nombre no puede ir vacio");
@@ -34,9 +38,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         array_push($errores, "El localidad no puede ir vacia");
     }
 
+    //Validacion de correo repetido
+
+    $query = "SELECT * FROM proveedor WHERE correo_proveedor = '${correo}'";
+    $resultado = mysqli_query($conexion, $query);
+
+    if(mysqli_num_rows($resultado) > 0){
+        array_push($errores, "Este proveedor ya existe");
+
+    }
+
+
+    //Etapa de mostrar errores o continuar a la insersion
+
     if (count($errores) > 0) {
         notificarErrores($errores);
     } else {
+
         $query = "INSERT INTO proveedor (nombre_proveedor, telefono_proveedor, correo_proveedor , direccion_proveedor, localidad_proveedor) VALUES ('{$nombre}', '{$telefono}', '{$correo}', '{$direccion}', '{$localidad}')";
 
         $respuesta = mysqli_query($conexion, $query);
