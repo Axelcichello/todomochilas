@@ -198,7 +198,7 @@ function paginar($registrosPagina, $tabla, $conn)
 function indices($totalPaginas)
 {
 
-    //Mostrar enlaces
+    //Mostrar 
     for ($i = 1; $i <= $totalPaginas; $i++) {
         echo "<a href='?pagina=$i'>$i</a>";
     }

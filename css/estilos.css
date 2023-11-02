@@ -66,30 +66,30 @@ h4 {
 
 /* HEADER */
 
-header{
+header {
     background-color: black;
     padding: 2rem 0 2rem 0;
 }
 
-header p{
+header p {
     margin: 0;
     color: white;
     font-size: 5rem;
 }
 
-header .contenedor{
+header .contenedor {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-header .navegacion a{
+header .navegacion a {
     margin-right: 3rem;
     font-size: 2rem;
     color: white;
 }
 
-.span-header{
+.span-header {
     color: orange;
     font-weight: bold;
 }
@@ -119,48 +119,48 @@ header .navegacion a{
 
 /* NOTIFICACION*/
 
-.div-fotomochila{
+.div-fotomochila {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.foto-mochila{
+.foto-mochila {
     height: 400px;
     width: 400px;
 }
 
-.cont{
+.cont {
     color: black;
 }
 
-.notificacion{
+.notificacion {
     text-align: center;
     font-size: 3rem;
     text-transform: uppercase;
 }
 
-.error{
+.error {
     background-color: #F81717;
 }
 
-.exito{
+.exito {
     background-color: #51DD19;
 
 }
 
-.notificacion p{
+.notificacion p {
     color: white;
 }
 
-.detalle li{
+.detalle li {
     list-style: none;
-font-size: 3rem;
+    font-size: 3rem;
 }
 
 /* FORMULARIO */
 
-.subtitulo{
+.subtitulo {
     color: black;
     text-transform: uppercase;
 }
@@ -210,11 +210,11 @@ font-size: 3rem;
 }
 
 
-.formulario .sublimado .similitud input{
+.formulario .sublimado .similitud input {
     margin: 0;
 }
 
-form .boton-amarillo{
+form .boton-amarillo {
     margin-top: 3rem;
     padding: 1rem;
     font-size: 2rem;
@@ -222,12 +222,12 @@ form .boton-amarillo{
     background-color: orange;
     text-transform: uppercase;
     font-weight: bold;
-    
+
 }
 
 /* INDEX */
 
-.encabezado{
+.encabezado {
     color: orange;
     font-size: 5rem;
     font-weight: 700;
@@ -235,52 +235,52 @@ form .boton-amarillo{
 
 
 
-.titulo{
+.titulo {
     font-size: 6rem;
 }
 
-.titulo-icono{
+.titulo-icono {
     color: black;
 }
 
-.anuncio-foto{
+.anuncio-foto {
     display: block;
     width: 100%;
 }
 
-.iconos-conocenos{
-    display: grid;
-    gap: 2rem;
-    grid-template-columns: repeat(3,1fr);
-}
-
-.icono{
-    text-align: center;
-}
-
-.icono h2{
-    text-transform: uppercase;
-    font-weight: bold;
-    
-}
-
-.contenedor-anuncios{
+.iconos-conocenos {
     display: grid;
     gap: 2rem;
     grid-template-columns: repeat(3, 1fr);
 }
 
-.anuncio{
+.icono {
+    text-align: center;
+}
+
+.icono h2 {
+    text-transform: uppercase;
+    font-weight: bold;
+
+}
+
+.contenedor-anuncios {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.anuncio {
     background-color: #eee;
     border: 1px solid #404040;
     margin-bottom: 2rem;
 }
 
-.anuncio .contenido-anuncio{
+.anuncio .contenido-anuncio {
     padding: 2rem;
 }
 
-.precio{
+.precio {
     font-weight: 700;
     font-size: 3rem;
     text-align: center;
@@ -288,14 +288,14 @@ form .boton-amarillo{
     margin-top: 1rem;
 }
 
-.precio-prod{
+.precio-prod {
     margin-top: 0;
     font-weight: bold;
     font-size: 5rem;
     color: black;
 }
 
-.boton-amarillo{
+.boton-amarillo {
     border: none;
     text-align: center;
     background-color: orange;
@@ -307,7 +307,7 @@ form .boton-amarillo{
     text-transform: uppercase;
 }
 
-.boton-form{
+.boton-form {
     cursor: pointer;
     border: none;
     text-align: center;
@@ -320,7 +320,7 @@ form .boton-amarillo{
 
 }
 
-.seccion-imagen{
+.seccion-imagen {
     background-image: url(../img/Mochila-banner.png);
     background-position: 50%;
     background-size: cover;
@@ -330,13 +330,14 @@ form .boton-amarillo{
     flex-direction: column;
 }
 
-.seccion-imagen p, h2{
+.seccion-imagen p,
+h2 {
     color: white;
     text-transform: uppercases;
     font-size: 3.5rem;
 }
 
-.boton-verde{
+.boton-verde {
     border: none;
     text-align: center;
     background-color: green;
@@ -348,56 +349,56 @@ form .boton-amarillo{
     text-transform: uppercase;
 }
 
-.centrado{
+.centrado {
     display: flex;
     justify-content: center;
 }
 
-.centrado .boton-verde{
+.centrado .boton-verde {
     padding: 1.5rem 5rem;
 }
 
-.txt-precios{
+.txt-precios {
     text-align: center;
 }
 
-.precios{
+.precios {
     display: grid;
     gap: 5rem;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(2, 1fr);
 }
 
-.lista{
+.lista {
     background-color: white;
     border: 1px solid;
 }
 
-.lista ul{
+.lista ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.lista li:nth-child(odd){
+.lista li:nth-child(odd) {
     background-color: #eee;
 }
 
-.articulos li{
+.articulos li {
     padding: 1rem;
     text-transform: capitalize;
 }
 
-.articulo{
+.articulo {
     display: flex;
     justify-content: space-between;
 }
 
-.articulo-nombre{
+.articulo-nombre {
     font-weight: 700;
     text-transform: capitalize;
 }
 
-.articulo-precio{
+.articulo-precio {
     color: orange;
     font-weight: bold;
 }
@@ -405,58 +406,58 @@ form .boton-amarillo{
 
 /* EMPRESA */
 
-.empresa-contenido{
+.empresa-contenido {
     display: grid;
     gap: 2rem;
     grid-template-columns: repeat(2, 1fr);
 }
 
-.comentarios{
+.comentarios {
     display: grid;
     gap: 2rem;
     grid-template-columns: repeat(3, 1fr);
 }
 
-.comentario{
+.comentario {
     background-color: orange;
     border-radius: 2rem;
     font-size: 3rem;
     padding: 2rem;
 }
 
-.comentario p{
+.comentario p {
     color: white;
 }
 
-.nombre{
+.nombre {
     display: flex;
     align-items: center;
-    justify-content: right;  
+    justify-content: right;
 }
 
 
 /* GALERIA */
 
-.galeria{
+.galeria {
     display: grid;
     gap: 2rem;
     grid-template-columns: repeat(3, 1fr);
 }
 
-.producto{
+.producto {
     background-color: #eee;
     margin: 0 2rem;
     padding: 1rem;
     text-align: center;
 }
 
-.producto-nombre{
+.producto-nombre {
     font-size: 2.7rem;
     text-transform: uppercase;
     margin: 3rem 0 0 0;
 }
 
-.producto-precio{
+.producto-precio {
     font-size: 3.5rem;
     font-weight: bold;
     color: orange;
@@ -466,7 +467,7 @@ form .boton-amarillo{
 
 /* PRODUCTO */
 
-.descripcion{
+.descripcion {
     display: grid;
     gap: 2rem;
     grid-template-columns: repeat(2, 1fr);
@@ -474,16 +475,96 @@ form .boton-amarillo{
 
 
 
+/*LOGIN*/
+
+.contenedor-login {
+    width: 95%;
+    max-width: 60rem;
+    margin: 0 auto;
+}
+
+.contenedor-login h1,
+p {
+    margin: 0;
+}
+
+.titulo-login {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.parrafo-login{
+    font-size: 3rem;
+}
+
+.login {
+    margin-top: 10rem;
+    background-color:#AFE69C;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0px 0px 30px -1px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 0px 0px 30px -1px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 30px -1px rgba(0, 0, 0, 0.75);
+}
+
+.login form {
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.login label {
+    margin-top: 1rem;
+}
+
+.login input{
+    padding: 1rem;
+    display: block;
+    width: 100%;
+    background-color: white;
+    border: 1px solid grey;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+}
+
+.login label, input{
+    font-size: 2rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*MEDIA QUERIE*/
 
-@media screen and (max-width: 767px){
-    
-    header .contenedor, footer .contenedor{
+@media screen and (max-width: 767px) {
+
+    header .contenedor,
+    footer .contenedor {
         display: block;
         text-align: center;
     }
-    .iconos-conocenos, .galeria, .contenedor-anuncios, .empresa-contenido
-    , .comentarios, .descripcion{
+
+    .iconos-conocenos,
+    .galeria,
+    .contenedor-anuncios,
+    .empresa-contenido,
+    .comentarios,
+    .descripcion {
         display: grid;
         gap: 2rem;
         grid-template-columns: repeat(1, 1fr);
