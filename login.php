@@ -8,11 +8,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     include_once './functions/funciones.php';
     include_once './functions/arrays.php';
 
+    $conexion = conectarDDBB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
     $correo = $_POST['correo'];
     $password = $_POST['password'];
 
-    $query = "SELECT * FROM usuario WHERE correo = '${correo}'";
-    debuguear($query);
+    $query = "SELECT * FROM usuario WHERE correo_usuario = '${correo}'";
+    $respuesta = mysqli_query($conexion, $query);
+
+    debuguear($respuesta);
 }
 
 

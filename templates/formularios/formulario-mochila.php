@@ -12,11 +12,7 @@
                 <label for="proveedor">Proveedor</label>
                 <input type="text" id="proveedor" placeholder="Ingrese nombre del proveedor">
 
-                <label for="telefono">Telefono del proveedor</label>
-                <input type="number" id="telefono" placeholder="Ingrese numero del proveedor">
-
-                <label for="email">Email del proveedor</label>
-                <input type="email" id="email" placeholder="Ingrese email del proveedor">
+                
 
                 <label for="nota">Notas sobre producto</label>
                 <textarea id="nota"></textarea>

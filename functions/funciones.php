@@ -53,7 +53,7 @@ function debuguear($dato)
 //Muestra la info de la variable
 function visualizar($dato)
 {
-    
+
 
     echo "<pre>";
     echo print_r($dato);
@@ -99,7 +99,7 @@ function mostrarProducto($productos)
 
         </form>
 
-    <?php }
+<?php }
 }
 
 //Metodo de saneo
@@ -141,6 +141,10 @@ function cargarFormulario($form)
         case 'mochila':
             return 'formulario-mochila.php';
             break;
+
+        case 'usuario':
+            return 'formulario-usuario.php';
+            break;
     }
 }
 
@@ -166,31 +170,10 @@ function paginar($registrosPagina, $tabla, $conn)
     $indiceInicio = ($paginaActual - 1) * $registrosPagina;
 
     //Consultar para obtener resultados de pagina actual
-    $queryPaginacion = "SELECT * FROM proveedor LIMIT $indiceInicio, $registrosPagina";
+    $queryPaginacion = "SELECT * FROM $tabla LIMIT $indiceInicio, $registrosPagina";
     $resultadoPaginacion = $conn->query($queryPaginacion);
 
-
-
-    foreach ($resultadoPaginacion as $fila) { ?>
-
-        <tr>
-            <td><?php echo $fila['id_proveedor'] ?></td>
-            <td><?php echo $fila['nombre_proveedor'] ?></td>
-            <td><?php echo $fila['correo_proveedor'] ?></td>
-            <td><?php echo $fila['direccion_proveedor'] ?></td>
-            <td><?php echo $fila['localidad_proveedor'] ?></td>
-
-            <td>
-                <div class="w-100">
-                    <a href="#" class="boton-rojo-block">ELIMINAR PRODUCTO</a>
-                    <a href="#" class="boton-naranja-block">VER / ACTUALIZAR PRODUCTO</a>
-                </div>
-            </td>
-        </tr>
-
-<?php }
-
-    return $totalPaginas;
+    return [$totalPaginas, $resultadoPaginacion];
 }
 
 

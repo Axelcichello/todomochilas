@@ -28,9 +28,9 @@
 
 
     <main class="contenedor seccion">
-        <h1 class="titulo-table">Administrador de Proveedores</h1>
+        <h1 class="titulo-table">Administrador de Usuarios</h1>
 
-        <a href="./formulario-admin.php?form=proveedor" class="boton boton-verde">Nuevo Proveedor</a>
+        <a href="./formulario-admin.php?form=usuario" class="boton boton-verde">Nuevo Usuario</a>
 
 
         <table class="ventas">
@@ -38,9 +38,9 @@
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
-                    <th>Correo Electronico</th>
-                    <th>Domicilio</th>
-                    <th>Localidad</th>
+                    <th>Apellido</th>
+                    <th>Correo</th>
+                    <th>Legajo</th>
 
                     <th>Acciones</th>
                 </tr>
@@ -48,21 +48,21 @@
 
             <tbody>
 
-                <?php list($totalPaginas, $resultadoPaginacion) = paginar(3, 'proveedor', $conexion);
+                <?php list($totalPaginas, $resultadoPaginacion) = paginar(3, 'usuario', $conexion);
 
                 foreach ($resultadoPaginacion as $fila) { ?>
 
                     <tr>
-                        <td><?php echo $fila['id_proveedor'] ?></td>
-                        <td><?php echo $fila['nombre_proveedor'] ?></td>
-                        <td><?php echo $fila['correo_proveedor'] ?></td>
-                        <td><?php echo $fila['direccion_proveedor'] ?></td>
-                        <td><?php echo $fila['localidad_proveedor'] ?></td>
+                        <td><?php echo $fila['id_usuario'] ?></td>
+                        <td><?php echo $fila['nombre_usuario'] ?></td>
+                        <td><?php echo $fila['apellido_usuario'] ?></td>
+                        <td><?php echo $fila['correo_usuario'] ?></td>
+                        <td><?php echo $fila['legajo_usuario'] ?></td>
 
                         <td>
                             <div class="w-100">
-                                <a href="#" class="boton-rojo-block">ELIMINAR PRODUCTO</a>
-                                <a href="#" class="boton-naranja-block">VER / ACTUALIZAR PRODUCTO</a>
+                                <a href="#" class="boton-rojo-block">ELIMINAR USUARIO</a>
+                                <a href="#" class="boton-naranja-block">VER / ACTUALIZAR USUARIO</a>
                             </div>
                         </td>
                     </tr>
@@ -71,8 +71,6 @@
 
 
                 ?>
-
-
 
             </tbody>
         </table>
