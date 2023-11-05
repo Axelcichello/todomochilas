@@ -8,8 +8,17 @@
     <title>Document</title>
 </head>
 <body>
-<?php include_once '../templates/header-admin.php'; ?>
+<?php 
+include_once '../functions/config.php';
+include_once '../functions/funciones.php';
+include_once '../functions/arrays.php';
+include_once '../templates/header-admin.php'; ?>
 
-    dashboard
+ 
+    <?php 
+    session_start();
+    echo $_SESSION['nombre']; ?>
+
+
 </body>
 </html>

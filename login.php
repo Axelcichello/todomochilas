@@ -17,8 +17,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $respuesta = mysqli_query($conexion, $query);
 
     if (mysqli_num_rows($respuesta) === 1) {
-        session_start();
+
         $datos = mysqli_fetch_assoc($respuesta);
+
+        session_start();
 
         $_SESSION['sesion'] = true;
         $_SESSION['nombre'] = $datos['nombre_usuario'];
@@ -29,7 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         header("Location: ./admin/dashboard-admin.php");
 
-        debuguear($_SESSION);
     } else {
         array_push($errores, "Usuario o contraseña incorrecta");
         notificarErrores($errores);
