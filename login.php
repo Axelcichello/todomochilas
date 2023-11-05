@@ -13,10 +13,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $correo = $_POST['correo'];
     $password = $_POST['password'];
 
-    $query = "SELECT * FROM usuario WHERE correo_usuario = '${correo}'";
+    $query = "SELECT * FROM usuario WHERE correo_usuario = '${correo}' AND password_usuario = '${password}'";
     $respuesta = mysqli_query($conexion, $query);
 
-    debuguear($respuesta);
+    if(mysqli_num_rows($respuesta) === 1){
+        echo "Coincidencia";
+    }else{
+        array_push($errores, "Usuario o contraseña incorrecta");
+        notificarErrores($errores);
+    }
 }
 
 
