@@ -16,9 +16,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $query = "SELECT * FROM usuario WHERE correo_usuario = '${correo}' AND password_usuario = '${password}'";
     $respuesta = mysqli_query($conexion, $query);
 
-    if(mysqli_num_rows($respuesta) === 1){
-        echo "Coincidencia";
-    }else{
+    if (mysqli_num_rows($respuesta) === 1) {
+        session_start();
+        $datos = mysqli_fetch_assoc($respuesta);
+
+        $_SESSION['sesion'] = true;
+        $_SESSION['nombre'] = $datos['nombre_usuario'];
+        $_SESSION['apellido'] = $datos['apellido_usuario'];
+        $_SESSION['legajo'] = $datos['legajo_usuario'];
+        $_SESSION['dni'] = $datos['dni_usuario'];
+        $_SESSION['correo'] = $datos['correo_usuario'];
+
+        header("Location: ./admin/dashboard-admin.php");
+
+        debuguear($_SESSION);
+    } else {
         array_push($errores, "Usuario o contraseña incorrecta");
         notificarErrores($errores);
     }
