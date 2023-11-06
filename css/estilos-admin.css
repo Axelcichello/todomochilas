@@ -24,7 +24,7 @@ p {
 
 a {
     text-decoration: none;
-    
+
 }
 
 img,
@@ -57,12 +57,12 @@ h4 {
     font-size: 2.6rem;
 }
 
-th{
+th {
     text-align: center;
     text-transform: capitalize;
 }
 
-td{
+td {
     text-align: center;
     text-transform: none;
 }
@@ -78,7 +78,7 @@ tr{
 
 */
 
-tr:nth-child(even){
+tr:nth-child(even) {
     background-color: gainsboro;
 }
 
@@ -88,44 +88,44 @@ tr:nth-child(even){
     margin: 0 auto;
 }
 
-.header{
+.header {
     background-color: #333;
     padding: 1rem 0 3rem;
 }
 
-.contenido-header{
+.contenido-header {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
 
-.barra{
-    align-items: center;    
+.barra {
+    align-items: center;
     display: flex;
     flex-direction: column;
     padding-top: 3rem;
 }
 
-@media screen and (min-width: 768px){
-    .barra{
+@media screen and (min-width: 768px) {
+    .barra {
         align-items: flex-end;
         flex-direction: row;
         justify-content: space-between;
     }
 
-    .derecha{
+    .derecha {
         align-items: flex-end;
     }
 }
 
 
-.marca{
+.marca {
     color: white;
     font-size: 3.8rem;
 }
 
-.pestana{
+.pestana {
     color: white;
     margin: 1rem;
     font-size: 2.5rem;
@@ -133,45 +133,46 @@ tr:nth-child(even){
 
 /* MAIN */
 
-.seccion{
+.seccion {
+    margin-left: 13%;
     margin-bottom: 2.5rem;
     margin-top: 2.5rem;
 }
 
-.boton-verde{
+.boton-verde {
     margin-bottom: 2rem;
-        background-color: green;
-        border: none;
-        color: white;
-        display: inline-block;
-        font-weight: 700;
-        margin-top: 2.5rem;
-        padding: 1rem 3rem;
-        text-align: center;
-        text-decoration: none;
+    background-color: green;
+    border: none;
+    color: white;
+    display: inline-block;
+    font-weight: 700;
+    margin-top: 2.5rem;
+    padding: 1rem 3rem;
+    text-align: center;
+    text-decoration: none;
 }
 
-table.ventas{
+table.ventas {
     border-spacing: 0;
     margin-top: 4rem;
     width: 100%;
 }
 
-table.ventas thead{
+table.ventas thead {
     background-color: green;
 }
 
-table.ventas thead th{
+table.ventas thead th {
     color: white;
     padding: 2rem;
 }
 
-.w-100{
+.w-100 {
     width: 100%;
     margin: 1rem 0;
 }
 
-.boton-rojo-block{
+.boton-rojo-block {
     background-color: red;
     border: none;
     color: white;
@@ -184,7 +185,7 @@ table.ventas thead th{
     text-transform: uppercase;
 }
 
-.boton-naranja-block{
+.boton-naranja-block {
     background-color: orange;
     border: none;
     color: white;
@@ -198,22 +199,22 @@ table.ventas thead th{
     text-transform: uppercase;
 }
 
-.titulo-table{
+.titulo-table {
     text-transform: uppercase;
     text-align: center;
     font-weight: bold;
 }
 
-.subtitulo{
+.subtitulo {
     color: black;
     text-transform: uppercase;
     text-align: center;
-    
+
 }
 
 /* FORMULARIO */
 
-.subtitulo{
+.subtitulo {
     color: black;
     text-transform: uppercase;
 }
@@ -263,11 +264,11 @@ table.ventas thead th{
 }
 
 
-.formulario .especifico .similitud input{
+.formulario .especifico .similitud input {
     margin: 0;
 }
 
-form .boton-amarillo{
+form .boton-amarillo {
     margin-top: 3rem;
     padding: 1rem;
     font-size: 2rem;
@@ -275,7 +276,7 @@ form .boton-amarillo{
     background-color: orange;
     text-transform: uppercase;
     font-weight: bold;
-    
+
 }
 
 .indices {
@@ -283,7 +284,7 @@ form .boton-amarillo{
     justify-content: center;
 }
 
-.indices a{
+.indices a {
     font-size: 2rem;
     margin-top: 2rem;
     margin-right: 1rem;
@@ -291,21 +292,58 @@ form .boton-amarillo{
     color: green;
 }
 
-.notificacion{
+.notificacion {
     text-align: center;
     font-size: 3rem;
     text-transform: uppercase;
 }
 
-.error{
+.error {
     background-color: #F81717;
 }
 
-.exito{
+.exito {
     background-color: #51DD19;
 
 }
 
-.notificacion p{
+.notificacion p {
     color: white;
 }
+
+.usuario {
+    color: white;
+    font-size: 2rem;
+}
+
+.span-usuario {
+    color: orange;
+    font-weight: bold;
+}
+
+.sidebar {
+    margin: 0;
+    padding: 0;
+    width: 12%;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: scroll;
+}
+
+.link-sidebar{
+    background-color: #bbbaba;
+    padding: 1rem;
+    border-radius: 1rem;
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.texto-sidebar{
+    color: #000000;
+    font-size: 2rem;
+    font-weight: bold;
+}
+

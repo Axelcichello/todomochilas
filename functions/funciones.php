@@ -186,3 +186,10 @@ function indices($totalPaginas)
         echo "<a href='?pagina=$i'>$i</a>";
     }
 }
+
+//Funcion para mandar a logear usuario si no lo esta
+function isAuth(){
+    if(!isset($_SESSION)){
+        header("Location: ../index.php");
+    }
+}
