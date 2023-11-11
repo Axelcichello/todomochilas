@@ -13,11 +13,10 @@
 <body>
 
     <?php
-
-    include_once './functions/config.php';
     include_once './functions/funciones.php';
+    include_once './functions/config.php';
     include_once './functions/arrays.php';
-    
+
     $conexion = conectarDDBB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
     include_once 'templates/header.php';
@@ -89,35 +88,31 @@
 
         <div class="contenedor-anuncios">
 
+            <?php
+
+            $sql = "SELECT * FROM mochila ORDER BY precio_mochila DESC LIMIT 3";
+
+            $resultado = mysqli_query($conexion, $sql);
+
+           
+            while ($datos = mysqli_fetch_assoc($resultado)) { ?>
+
+
             <div class="anuncio">
-                <img class="anuncio-foto" src="img/mochila1.jpg" alt="anuncio">
+                <img class="anuncio-foto" src="img/mochilas/<?php echo $datos['foto_mochila'] ?>" alt="anuncio">
                 <div class="contenido-anuncio">
-                    <h3>Mochila Escolar P/ Universidad</h3>
-                    <p>Mochila en variantes de colores ideal para estudiantes universitarios o secundario.</p>
-                    <p class="precio">$6300</p>
-                    <a href="#" class="boton-amarillo">Ver Mochila</a>
+                    <h3><?php echo $datos['nombre_mochila'] ?></h3>
+                    <p><?php echo $datos['descripcion_mochila'] ?></p>
+                    <p class="precio">$<?php echo $datos['precio_mochila'] ?></p>
+                    <a href="galeria.php" class="boton-amarillo">Ver galeria</a>
+                    
                 </div>
             </div>
 
-            <div class="anuncio">
-                <img class="anuncio-foto" src="img/mochila2.jpg" alt="anuncio">
-                <div class="contenido-anuncio">
-                    <h3>Mochila Escolar Doble Cierre</h3>
-                    <p>Doble cierre para guardar pequeños utiles. Descuento en efectivo solo en este modelo y color.</p>
-                    <p class="precio">$6200</p>
-                    <a href="#" class="boton-amarillo">Ver Mochila</a>
-                </div>
-            </div>
+            <?php } ?>
 
-            <div class="anuncio">
-                <img class="anuncio-foto" src="img/mochila3.jpg" alt="anuncio">
-                <div class="contenido-anuncio">
-                    <h3>Mochila Anti Robo Talle Unico</h3>
-                    <p>Para llevar notebooks y consolas de videojuegos, impermeable. Con sistema de rastreo SMS.</p>
-                    <p class="precio">$8500</p>
-                    <a href="#" class="boton-amarillo">Ver Mochila</a>
-                </div>
-            </div>
+
+
         </div>
 
         <div class="centrado">
@@ -179,7 +174,7 @@
                     </li>
                     <li class="articulo">
                         <p class="articulo-nombre">Mochila estampado a pedido</p>
-                        <p class="articulo-precio"><a href="contacto.html">CONSULTAR</a></p>
+                        <p class="articulo-precio"><a href="contacto.php">CONSULTAR</a></p>
                     </li>
                 </ul>
             </div>

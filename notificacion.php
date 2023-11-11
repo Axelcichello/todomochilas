@@ -80,15 +80,21 @@
 
             <?php
 
-            if (count($errores) > 0) {
+            if (count($errores) > 0) { ?>
 
-                notificarErrores($errores);
 
-            ?>
+                <div class="notificar-error">
+
+                    <?php notificarErrores($errores); ?>
+
+                </div>
 
                 <div class="div-fotomochila">
-                    <img src="./img/mochila-llorando.jpg" alt="Mochila llorando" class="foto-mochila">
-                </div>
+                        <img src="./img/mochila-llorando.jpg" alt="Mochila llorando" class="foto-mochila">
+                    </div>
+
+
+
 
                 <p>Por favor, vuelva a cargar el formulario.</p>
 

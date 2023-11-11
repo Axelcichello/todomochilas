@@ -42,7 +42,7 @@
                 <textarea name="mensaje" id="mensaje"></textarea>
             </fieldset>
 
-            <fieldset class="sublimado">
+            <fieldset class="sublimado" id="sublimado">
                 <legend>Sublimados</legend>
 
                 <label for="mochila">Talle de mochila</label>
@@ -67,9 +67,15 @@
                     <input type="radio" name="similitud" value="buscar" id="buscar">
                 </div>
 
+                <div class="terminos">
+                    <input type="checkbox" id="terminos" class="check-terminos">
+                    <label for="terminos">Terminos y condiciones</label>
+                </div>
+
             </fieldset>
 
-            <input type="submit" class="boton-amarillo" value="ENVIAR">
+
+            <input type="submit" id="sendContacto" disabled class="boton" value="ENVIAR">
 
         </form>
     </main>
@@ -81,5 +87,7 @@
     ?>
 
 </body>
+
+<script src="functions/scripts.js"></script>
 
 </html>

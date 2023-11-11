@@ -150,7 +150,7 @@ function cargarFormulario($form)
 
 
 //paginacion para reutilizar en la diferentes paginas con listados
-function paginar($registrosPagina, $tabla, $conn)
+function paginar($registrosPagina, $tabla, $conn, $queryTabla)
 {
 
 
@@ -170,7 +170,8 @@ function paginar($registrosPagina, $tabla, $conn)
     $indiceInicio = ($paginaActual - 1) * $registrosPagina;
 
     //Consultar para obtener resultados de pagina actual
-    $queryPaginacion = "SELECT * FROM $tabla LIMIT $indiceInicio, $registrosPagina";
+    $queryPaginacion = "{$queryTabla} LIMIT $indiceInicio, $registrosPagina";
+
     $resultadoPaginacion = $conn->query($queryPaginacion);
 
     return [$totalPaginas, $resultadoPaginacion];
@@ -189,7 +190,14 @@ function indices($totalPaginas)
 
 //Funcion para mandar a logear usuario si no lo esta
 function isAuth(){
-    if(!isset($_SESSION)){
-        header("Location: ../index.php");
+    if(!isset($_SESSION['sesion'])){
+        header('Location: ../login.php');
+    }
+}
+
+//Funcion para determinar si un usuario es admin y asi mostrar la pestaña de usuarios
+function isAdmin(){
+    if(!isset($_SESSION['sesion']) || $_SESSION['nivel'] != 3){
+        header('Location: dashboard-admin.php');
     }
 }

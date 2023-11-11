@@ -1,5 +1,7 @@
 <?php
 
+isAdmin();
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -61,50 +63,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ?>
 
 
@@ -131,11 +89,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <label for="correo">Correo del usuario</label>
         <input type="email" id="correo" name="correo" placeholder="Ingrese correo del usuario">
 
+
+
         <label for=password">Contraseña del usuario</label>
-        <input type="text" id="password" name="password" placeholder="Ingrese contraseña del usuario">
+        <input type="text" id="password" name="password" oninput="verificarPassword()" placeholder="Ingrese contraseña del usuario">
 
         <label for="password2">Repetir contraseña</label>
-        <input type="text" name="password2" id="password2" placeholder="Repetir contraseña">
+        <input type="text" name="password2" id="password2" oninput="verificarPassword()" placeholder="Repetir contraseña">
+
+
+
+
+
 
     </fieldset>
 

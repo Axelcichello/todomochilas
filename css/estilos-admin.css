@@ -89,6 +89,8 @@ tr:nth-child(even) {
 }
 
 .header {
+    position: sticky;
+    top: 0;
     background-color: #333;
     padding: 1rem 0 3rem;
 }
@@ -341,9 +343,43 @@ form .boton-amarillo {
     align-items: center;
 }
 
-.texto-sidebar{
+p.texto-sidebar{
     color: #000000;
     font-size: 2rem;
     font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
+.dashboard-cards{
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.card{
+    display: flex;
+    flex-direction: column;
+    background-color: #5cf45c;
+    border-radius: 1rem;
+    text-align: center;
+}
+
+.h2-card{
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 2rem;
+    margin-bottom: 0;
+}
+
+.p-card{
+    font-size: 2rem;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.foto-mochila-adm{
+    width: 15rem;
+    height: 15rem;
+    padding: 1rem;
+}

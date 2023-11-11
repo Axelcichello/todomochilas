@@ -135,10 +135,18 @@ header .navegacion a {
 }
 
 .notificacion {
+    margin-top: 1rem;
     text-align: center;
     font-size: 3rem;
     text-transform: uppercase;
 }
+
+.notificar-error{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+}
+
 
 .error {
     background-color: #F81717;
@@ -182,7 +190,7 @@ header .navegacion a {
     display: block;
 }
 
-.formulario input:not([type="submit"]),
+.formulario input:not([type="submit"], [type="checkbox"]),
 .formulario textarea,
 .formulario select {
 
@@ -294,6 +302,23 @@ form .boton-amarillo {
     font-size: 5rem;
     color: black;
 }
+
+.boton{
+
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    padding: 1rem 1rem;
+    display: block;
+    color: black;
+    font-weight: 700;
+    text-transform: uppercase;
+    background-color: #404040;
+    margin-top: 3rem;
+
+}
+
+
 
 .boton-amarillo {
     border: none;
@@ -532,14 +557,30 @@ p {
     font-size: 2rem;
 }
 
+.terminos{
+    margin-top: 2rem;
+    display: flex;
+}
 
+.notificaciones-cont{
+    margin-top: 2rem;
+    display: flex;
+}
 
+.notificaciones{
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
 
+.check-terminos{
+    margin-right: 1rem;
+}
 
-
-
-
-
+.checkeado{
+    background-color: red;
+}
 
 
 

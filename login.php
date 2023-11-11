@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['legajo'] = $datos['legajo_usuario'];
         $_SESSION['dni'] = $datos['dni_usuario'];
         $_SESSION['correo'] = $datos['correo_usuario'];
+        $_SESSION['nivel'] = $datos['nivel_usuario'];
 
         header("Location: ./admin/dashboard-admin.php");
 

@@ -16,6 +16,11 @@
     include_once '../functions/funciones.php';
     include_once '../functions/arrays.php';
     include_once '../templates/header-admin.php';
+    include_once '../templates/sidebar-admin.php';
+
+
+    isAuth();
+
 
     $conexion = conectarDDBB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
@@ -25,12 +30,15 @@
 
     ?>
 
-    <main class="contenedor">
+    <main class="contenedor seccion">
 
         <?php include_once "../templates/formularios/{$form}" ?>
 
     </main>
 
 </body>
+
+<script src="../functions/scripts.js"></script>
+
 
 </html>

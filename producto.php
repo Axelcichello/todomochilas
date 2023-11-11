@@ -16,26 +16,41 @@
     <?php
 
     include 'functions/arrays.php';
+    include 'functions/config.php';
+    include 'functions/funciones.php';
     include 'templates/header.php';
 
+    $conexion = conectarDDBB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+
     $id = $_POST['id'];
-    $imagen = $_POST['imagen'];
-    $nombre = $_POST['nombre'];
-    $precio = $_POST['precio'];
-    $descripcion = $_POST['descripcion'];
+
+    $sql = "SELECT * FROM mochila WHERE id_mochila = {$id}";
+
+    $resultado = mysqli_query($conexion, $sql);
+
+    if(mysqli_num_rows($resultado) > 0){
+
+        $producto = mysqli_fetch_assoc($resultado);
+    }else{
+
+        array_push($errores, "Producto inexistente");
+        notificarErrores($errores);
+    }
+
 
     ?>
 
     <main class="contenedor">
-        <h1><?php echo $nombre ?></h1>
+        <h1><?php echo $producto['nombre_mochila'] ?></h1>
 
         <div class="descripcion">
-            <img src="img/<?php echo $imagen ?>.jpg" alt="Mochila">
+            <img src="./img/mochilas/<?php echo $producto['foto_mochila'] ?>" alt="Mochila">
 
             <div class="mochila-descripcion">
-                <p><?php echo $descripcion ?></p>
+                <p><?php echo $producto['descripcion_mochila'] ?></p>
 
-                <p class="precio-prod">$<?php echo $precio ?></p>
+                <p class="precio-prod">$<?php echo $producto['precio_mochila'] ?></p>
 
                 <form action="#" class="formulario" method="POST">
                     <select name="talle" id="talle">
@@ -47,7 +62,7 @@
 
                     <input type="number" placeholder="cantidad" min="1">
 
-                    <input type="submit" class="boton-amarillo" value="comprar" disabled= "disabled">
+                    <input type="submit" class="boton-amarillo" value="comprar" disabled="disabled">
 
 
                 </form>

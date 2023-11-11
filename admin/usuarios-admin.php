@@ -16,7 +16,13 @@
     include_once '../functions/config.php';
     include_once '../functions/funciones.php';
     include_once '../functions/arrays.php';
+
     include_once '../templates/header-admin.php';
+    include_once '../templates/sidebar-admin.php';
+
+    isAuth();
+    isAdmin();
+
 
     $conexion = conectarDDBB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
@@ -48,7 +54,11 @@
 
             <tbody>
 
-                <?php list($totalPaginas, $resultadoPaginacion) = paginar(3, 'usuario', $conexion);
+                <?php 
+                
+                $query ="SELECT * FROM usuario";
+                
+                list($totalPaginas, $resultadoPaginacion) = paginar(3, 'usuario', $conexion, $query);
 
                 foreach ($resultadoPaginacion as $fila) { ?>
 
