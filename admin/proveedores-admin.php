@@ -13,9 +13,17 @@
 <body>
 
     <?php
+
+
     include_once '../functions/config.php';
     include_once '../functions/funciones.php';
     include_once '../functions/arrays.php';
+
+    if (isset($_GET) && isset($_GET['idEliminar'])) {
+
+        $mensaje  = "Eliminando";
+        debuguear($mensaje);
+    }
 
     include_once '../templates/header-admin.php';
     include_once '../templates/sidebar-admin.php';
@@ -25,7 +33,7 @@
 
     $conexion = conectarDDBB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
-
+    
 
 
     ?>
@@ -55,8 +63,8 @@
 
 
                 <?php
-                
-                $query ="SELECT * FROM proveedor";
+
+                $query = "SELECT * FROM proveedor";
                 list($totalPaginas, $resultadoPaginacion) = paginar(3, 'proveedor', $conexion, $query);
 
                 foreach ($resultadoPaginacion as $fila) { ?>
@@ -70,7 +78,7 @@
 
                         <td>
                             <div class="w-100">
-                                <a href="#" class="boton-rojo-block">ELIMINAR PRODUCTO</a>
+                            <a href="proveedores-admin.php?idEliminar=<?php echo $fila['id_proveedor'] ?>" class="boton-rojo-block eliminarRegistro">ELIMINAR PRODUCTO</a>
                                 <a href="#" class="boton-naranja-block">VER / ACTUALIZAR PRODUCTO</a>
                             </div>
                         </td>
@@ -95,5 +103,16 @@
     </main>
 
 </body>
+
+<script>
+
+    function mostrarAlerta() {
+    alert("¡Hola! Esto es un mensaje de alerta.");
+  }
+
+  // Llamar a la función al cargar la página (esto es opcional)
+  mostrarAlerta();
+  
+</script>
 
 </html>
