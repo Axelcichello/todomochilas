@@ -1,5 +1,22 @@
 <?php
 
+if (isset($_GET['id'])) {
+
+    $idBuscar = $_GET['id'];
+
+    $query = "SELECT * FROM mochila INNER JOIN proveedor ON mochila.proveedor_id_proveedor = proveedor.id_proveedor";
+    $query = mysqli_query($conexion, $query);
+
+    if (mysqli_num_rows($query) > 0) {
+
+        while ($row = mysqli_fetch_assoc($query)) {
+            if ($row['id_mochila'] == $idBuscar) {
+                $buscado[] = $row;
+            }
+        }
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
@@ -52,21 +69,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         array_push($errores, "El stock no puede ir vacio");
     }
 
-    if (count($errores) > 0) {
-        notificarErrores($errores);
+
+    if (!isset($_GET['id'])) {
+
+        if (count($errores) > 0) {
+            notificarErrores($errores);
+        } else {
+
+            $query = "INSERT INTO mochila (nombre_mochila, precio_mochila, stock_mochila, descripcion_mochila, proveedor_id_proveedor, foto_mochila) VALUES ('{$nombre}', '{$precio}', '{$stock}', '{$descripcion}', '{$proveedor}', '{$nombreFoto}')";
+
+            $respuesta = mysqli_query($conexion, $query);
+
+            if ($respuesta == true) { ?>
+
+                <div class="notificacion exito">
+                    <p>Proveedor registrado correctamente</p>
+                </div>
+
+            <?php }
+        }
     } else {
 
-        $query = "INSERT INTO mochila (nombre_mochila, precio_mochila, stock_mochila, descripcion_mochila, proveedor_id_proveedor, foto_mochila) VALUES ('{$nombre}', '{$precio}', '{$stock}', '{$descripcion}', '{$proveedor}', '{$nombreFoto}')";
+        if (count($errores) > 0) {
+            notificarErrores($errores);
+        } else {
 
-        $respuesta = mysqli_query($conexion, $query);
+            $sql = "UPDATE mochila SET nombre_mochila = '{$nombre}', precio_mochila = '{$precio}', stock_mochila = '{$stock}', descripcion_mochila = '{$descripcion}', proveedor_id_proveedor = '{$proveedor}', foto_mochila = '{$nombreFoto}' WHERE id_mochila = '{$idBuscar}'";
 
-        if ($respuesta == true) { ?>
+            $respuesta = mysqli_query($conexion, $sql);
 
-            <div class="notificacion exito">
-                <p>Proveedor registrado correctamente</p>
-            </div>
+            if ($respuesta == TRUE) { ?>
+
+                <div class="notificacion exito">
+                    <p>Proveedor actualizado correctamente</p>
+                </div>
 
 <?php }
+        }
     }
 }
 
@@ -76,45 +115,57 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <h2 class="subtitulo">REGISTRAR mochila</h2>
 
+<?php echo isset($_GET['id']) ? '<button class="boton-editar" onclick="editar()" type="button">Editar Proveedor</button>' : '' ?>
 
-<form method="POST" action="./formulario-admin.php?form=mochila" class="formulario" enctype="multipart/form-data">
+
+<form method="POST" action="./formulario-admin.php?form=mochila&id=<?php echo $_GET['id'] ?>" class="formulario" enctype="multipart/form-data">
 
     <fieldset>
         <legend>Informacion General del Producto</legend>
 
         <label for="nombre">Nombre de la mochila</label>
-        <input type="text" id="nombre" name="nombre" placeholder="Ingrese nombre del producto">
+        <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="text" value="<?php echo (isset($_GET) ? $buscado[0]['nombre_mochila'] : "") ?>" id="nombre" name="nombre" placeholder="Ingrese nombre del producto">
 
         <label for="proveedor">Proveedor</label>
 
-        <select name="proveedor" id="proveedor">
+        <select <?php echo isset($_GET['id']) ? 'disabled' : '' ?> name="proveedor" id="proveedor">
 
-            <?php
+            <?php if (!isset($_GET['id'])) {
 
-            $proveedores = traerTodo('proveedor', $conexion);
-            foreach ($proveedores as $proveedor) { ?>
+                $proveedores = traerTodo('proveedor', $conexion);
+                foreach ($proveedores as $proveedor) { ?>
 
+                    <option value="<?php echo $proveedor['id_proveedor']; ?>"> <?php echo $proveedor['nombre_proveedor']; ?> </option>
 
-                <option value="<?php echo $proveedor['id_proveedor']; ?>"> <?php echo $proveedor['nombre_proveedor']; ?> </option>
-
-            <?php  } ?>
+                <?php  }
+            } else { ?>
+                <option value="<?php echo $buscado[0]['id_proveedor']; ?>"> <?php echo $buscado[0]['nombre_proveedor']; ?> </option>
+            <?php } ?>
         </select>
 
         <label for="precio">precio</label>
-        <input type="number" id="precio" name="precio" placeholder="Ingrese el precio">
+        <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="number" value="<?php echo (isset($_GET) ? $buscado[0]['precio_mochila'] : "") ?>" id="precio" name="precio" placeholder="Ingrese el precio">
 
         <label for="stock">stock</label>
-        <input type="number" name="stock" id="stock" placeholder="Ingrese el stock">
+        <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="number" value="<?php echo (isset($_GET) ? $buscado[0]['stock_mochila'] : "") ?>" name="stock" id="stock" placeholder="Ingrese el stock">
 
         <label for="descripcion">descripcion</label>
-        <textarea style="resize: none;" name="descripcion" id="descripcion" cols="30" rows="10"></textarea>
+        <textarea <?php echo isset($_GET['id']) ? 'disabled' : '' ?> style="resize: none;" name="descripcion" id="descripcion" cols="30" rows="10"><?php echo (isset($_GET) ? $buscado[0]['descripcion_mochila'] : "") ?></textarea>
 
         <label for="foto">foto</label>
-        <input type="file" name="foto" id="foto" placeholder="Foto de la mochila">
+        <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="file" name="foto" id="foto" placeholder="Foto de la mochila">
+
+
+
+        <?php
+
+        if (isset($_GET['id'])) { ?>
+
+            <img class="mochila-editar" src="<?php echo DIR_MOCHILA . $buscado[0]['foto_mochila'] ?>" alt="Foto mochila buscada">
+
+        <?php } ?>
 
     </fieldset>
-
-
 
     <input type="submit" class="boton boton-verde" value="REGISTRAR PRODUCTO">
 

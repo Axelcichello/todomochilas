@@ -32,6 +32,8 @@
         <h1 class="titulo-table">Dashboard</h1>
 
         <div class="dashboard-cards">
+
+        
             <div class="card">
                 <h2 class="h2-card">Usuarios registrados(no admins)</h2>
 
@@ -101,7 +103,7 @@
 
                 ?>
 
-                <p class="p-card"><?php echo $dato['total'] ?> es el total</p>
+                <p class="p-card">$<?php echo $dato['total'] ?> es el total</p>
             </div>
         </div>
     </main>

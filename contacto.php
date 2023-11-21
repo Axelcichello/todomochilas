@@ -89,7 +89,6 @@
 </body>
 
 <script>
-
     //Variables para terminos
     var tyc = document.getElementById('terminos')
     var submit = document.getElementById('sendContacto');
@@ -142,7 +141,6 @@
             divNotif.remove();
         }
     }
-    
 </script>
 
 </html>

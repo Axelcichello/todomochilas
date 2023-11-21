@@ -38,7 +38,19 @@
 
 </body>
 
-<script src="../functions/scripts.js"></script>
+<script>
+
+function editar() {
+            var formulario = document.querySelector('.formulario');
+            var elementos = formulario.elements;
+
+            // Iterar sobre los elementos del formulario y quitar el atributo 'disabled'
+            for (var i = 0; i < elementos.length; i++) {
+                elementos[i].removeAttribute('disabled');
+            }
+        }
+
+</script>
 
 
 </html>

@@ -25,7 +25,14 @@
 
     $conexion = conectarDDBB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
+    if (isset($_GET) && isset($_GET['idEliminar'])) {
 
+        $idEliminar = $_GET['idEliminar'];
+
+        $sql = "DELETE FROM mochila WHERE id_mochila = {$idEliminar}";
+
+        $resultado = mysqli_query($conexion, $sql);
+    }
 
 
     ?>
@@ -34,6 +41,33 @@
 
     <main class="contenedor seccion">
         <h1 class="titulo-table">Administrador de mochilas</h1>
+
+
+
+        <?php
+
+
+        if (isset($resultado)) {
+            $filasAfectadas = mysqli_affected_rows($conexion);
+
+            if ($filasAfectadas > 0) { ?>
+
+                <div class="notificacion exito">
+                    <p>Mochila eliminada correctamente</p>
+                </div>
+
+            <?php } else { ?>
+
+                <div class="notificacion error">
+                    <p>Error al eliminar la mochila</p>
+                </div>
+
+        <?php }
+        }
+
+
+
+        ?>
 
         <a href="./formulario-admin.php?form=mochila" class="boton boton-verde">Nueva Mochila</a>
 
@@ -52,12 +86,12 @@
 
             <tbody>
 
-            <?php 
+                <?php
 
-            $query = "SELECT * FROM mochila INNER JOIN proveedor ON mochila.proveedor_id_proveedor = proveedor.id_proveedor";
+                $query = "SELECT * FROM mochila INNER JOIN proveedor ON mochila.proveedor_id_proveedor = proveedor.id_proveedor ORDER BY id_mochila ASC";
 
-            list($totalPaginas, $resultadoPaginacion) = paginar(5, 'mochila', $conexion, $query);
-            
+                list($totalPaginas, $resultadoPaginacion) = paginar(5, 'mochila', $conexion, $query);
+
 
                 foreach ($resultadoPaginacion as $fila) { ?>
 
@@ -72,8 +106,10 @@
 
                         <td>
                             <div class="w-100">
-                                <a href="#" class="boton-rojo-block">ELIMINAR PRODUCTO</a>
-                                <a href="#" class="boton-naranja-block">VER / ACTUALIZAR PRODUCTO</a>
+
+                                <a href="#" onclick="confirmarEliminacion(<?php echo $fila['id_mochila']; ?>, '<?php echo $fila['nombre_mochila']; ?>')" class="boton-rojo-block">ELIMINAR PRODUCTO</a>
+                                <a href="./formulario-admin.php?form=mochila&id=<?php echo $fila['id_mochila'] ?>" class="boton-naranja-block">VER / ACTUALIZAR PRODUCTO</a>
+
                             </div>
                         </td>
                     </tr>
@@ -82,39 +118,6 @@
 
 
                 ?>
-
-
-            
-
-                <!-- <?php
-
-                //list($totalPaginas, $resultadoPaginacion) = paginar(3, 'mochila', $conexion);
-
-                $sql = "SELECT * FROM mochila INNER JOIN proveedor ON mochila.proveedor_id_proveedor = proveedor.id_proveedor";
-
-                $resultado = mysqli_query($conexion, $sql);
-
-                while ($fila = $resultado->fetch_array()) { ?>
-
-                    <tr>
-                        <td><?php echo $fila['id_mochila'] ?></td>
-                        <td><?php echo $fila['nombre_mochila'] ?></td>
-                        <td><?php echo $fila['precio_mochila'] ?></td>
-                        <td>
-                            <img class="foto-mochila-adm" src="../img/mochilas/<?php echo $fila['foto_mochila'] ?>" alt="foto">
-                        </td>
-                        <td><?php echo $fila['nombre_proveedor'] ?></td>
-
-                        <td>
-                            <div class="w-100">
-                                <a href="#" class="boton-rojo-block">ELIMINAR PRODUCTO</a>
-                                <a href="#" class="boton-naranja-block">VER / ACTUALIZAR PRODUCTO</a>
-                            </div>
-                        </td>
-                    </tr>
-
-                <?php }?> -->
-
 
 
             </tbody>
@@ -131,5 +134,16 @@
     </main>
 
 </body>
+
+<script>
+    function confirmarEliminacion(idEliminar, nombreEliminar) {
+        var confirmacion = confirm("¿Desea eliminar la mochila " + nombreEliminar + " ?")
+
+        if (confirmacion) {
+            window.location.href = "mochilas-admin.php?idEliminar=" + idEliminar;
+        }
+
+    }
+</script>
 
 </html>

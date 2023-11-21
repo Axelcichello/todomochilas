@@ -2,6 +2,20 @@
 
 isAdmin();
 
+if (isset($_GET['id'])) {
+
+    $idBuscar = $_GET['id'];
+
+    $usuarios = traerTodo('usuario', $conexion);
+
+    foreach ($usuarios as $usuario) {
+
+        if ($usuario['id_usuario'] == $idBuscar) {
+            $buscado[] = $usuario;
+        }
+    }
+}
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -33,31 +47,54 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         array_push($errores, "El correo no puede ir vacio");
     }
 
-    if (!isset($password) || $password === '') {
-        array_push($errores, "El password no puede ir vacio");
-    }
-
-    if (!isset($password2) || $password2 === '') {
-        array_push($errores, "El password repetido no puede ir vacio");
-    } else if ($password != '' && $password != $password2) {
-        array_push($errores, "Las contraseñas no coinciden");
-    }
+    
 
 
-    if (count($errores) > 0) {
-        notificarErrores($errores);
+    if (!isset($_GET['id'])) {
+
+        if (!isset($password) || $password === '') {
+            array_push($errores, "El password no puede ir vacio");
+        }
+    
+        if (!isset($password2) || $password2 === '') {
+            array_push($errores, "El password repetido no puede ir vacio");
+        } else if ($password != '' && $password != $password2) {
+            array_push($errores, "Las contraseñas no coinciden");
+        }
+
+        if (count($errores) > 0) {
+            notificarErrores($errores);
+        } else {
+            $query = "INSERT INTO usuario (nombre_usuario, apellido_usuario, dni_usuario, legajo_usuario, password_usuario, correo_usuario) VALUES ('{$nombre}', '{$apellido}', '{$dni}', '{$legajo}', '{$password}', '{$correo}')";
+
+            $respuesta = mysqli_query($conexion, $query);
+
+            if ($respuesta ==    TRUE) { ?>
+
+                <div class="notificacion exito">
+                    <p>Usuario registrado correctamente</p>
+                </div>
+
+            <?php }
+        }
     } else {
-        $query = "INSERT INTO usuario (nombre_usuario, apellido_usuario, dni_usuario, legajo_usuario, password_usuario, correo_usuario) VALUES ('{$nombre}', '{$apellido}', '{$dni}', '{$legajo}', '{$password}', '{$correo}')";
 
-        $respuesta = mysqli_query($conexion, $query);
+        if (count($errores) > 0) {
+            notificarErrores($errores);
+        } else {
 
-        if ($respuesta ==    TRUE) { ?>
+            $sql = "UPDATE usuario SET nombre_usuario = '{$nombre}', apellido_usuario = '{$apellido}', dni_usuario = '{$dni}', legajo_usuario = '{$legajo}', correo_usuario = '{$correo}' WHERE id_usuario = '{$idBuscar}'";
 
-            <div class="notificacion exito">
-                <p>Usuario registrado correctamente</p>
-            </div>
+            $respuesta = mysqli_query($conexion, $sql);
+
+            if ($respuesta == TRUE) { ?>
+
+                <div class="notificacion exito">
+                    <p>Proveedor actualizado correctamente</p>
+                </div>
 
 <?php }
+        }
     }
 }
 
@@ -68,39 +105,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <h2 class="subtitulo">REGISTRAR usuario</h2>
 
+<?php echo isset($_GET['id']) ? '<button class="boton-editar" onclick="editar()" type="button">Editar Proveedor</button>' : '' ?>
 
-<form method="POST" action="./formulario-admin.php?form=usuario" class="formulario" enctype="multipart/form-data">
+<form method="POST" action="./formulario-admin.php?form=usuario&id=<?php echo $_GET['id'] ?>" class="formulario" enctype="multipart/form-data">
 
     <fieldset>
         <legend>Informacion del usuario</legend>
 
+
         <label for="nombre">Nombre del usuario</label>
-        <input type="text" name="nombre" id="nombre" placeholder="Ingrese nombre del usuario">
+        <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="text" value="<?php echo (isset($_GET) ? $buscado[0]['nombre_usuario'] : "") ?>" name="nombre" id="nombre" placeholder="Ingrese nombre del usuario">
 
         <label for="apellido">Apellido del usuario</label>
-        <input type="text" name="apellido" id="apellido" placeholder="Ingrese apellido del usuario">
+        <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="text" value="<?php echo (isset($_GET) ? $buscado[0]['apellido_usuario'] : "") ?>" name="apellido" id="apellido" placeholder="Ingrese apellido del usuario">
 
         <label for="dni">DNI del usuario</label>
-        <input type="number" name="dni" id="dni" placeholder="Ingrese DNI del usuario">
+        <input type="number" <?php echo isset($_GET['id']) ? 'disabled' : '' ?> value="<?php echo (isset($_GET) ? $buscado[0]['dni_usuario'] : "") ?>" name="dni" id="dni" placeholder="Ingrese DNI del usuario">
 
         <label for="legajo">Legajo del usuario</label>
-        <input type="number" id="legajo" name="legajo" placeholder="Ingrese legajo del usuario">
+        <input type="number" <?php echo isset($_GET['id']) ? 'disabled' : '' ?> value="<?php echo (isset($_GET) ? $buscado[0]['legajo_usuario'] : "") ?>" id="legajo" name="legajo" placeholder="Ingrese legajo del usuario">
 
         <label for="correo">Correo del usuario</label>
-        <input type="email" id="correo" name="correo" placeholder="Ingrese correo del usuario">
+        <input type="email" <?php echo isset($_GET['id']) ? 'disabled' : '' ?> value="<?php echo (isset($_GET) ? $buscado[0]['correo_usuario'] : "") ?>" id="correo" name="correo" placeholder="Ingrese correo del usuario">
 
 
+        <?php if (!isset($_GET['id'])) { ?>
 
-        <label for=password">Contraseña del usuario</label>
-        <input type="text" id="password" name="password" oninput="verificarPassword()" placeholder="Ingrese contraseña del usuario">
+            <label for=password">Contraseña del usuario</label>
+            <input type="text" id="password" name="password" oninput="verificarPassword()" placeholder="Ingrese contraseña del usuario">
 
-        <label for="password2">Repetir contraseña</label>
-        <input type="text" name="password2" id="password2" oninput="verificarPassword()" placeholder="Repetir contraseña">
+            <label for="password2">Repetir contraseña</label>
+            <input type="text" name="password2" id="password2" oninput="verificarPassword()" placeholder="Repetir contraseña">
 
-
-
-
-
+        <?php } ?>
 
     </fieldset>
 

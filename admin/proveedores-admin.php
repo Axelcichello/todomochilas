@@ -19,22 +19,26 @@
     include_once '../functions/funciones.php';
     include_once '../functions/arrays.php';
 
-    if (isset($_GET) && isset($_GET['idEliminar'])) {
-
-        $mensaje  = "Eliminando";
-        debuguear($mensaje);
-    }
-
     include_once '../templates/header-admin.php';
     include_once '../templates/sidebar-admin.php';
 
     isAuth();
 
 
+
     $conexion = conectarDDBB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
-    
 
+    if (isset($_GET) && isset($_GET['idEliminar'])) {
+
+        $idEliminar = $_GET['idEliminar'];
+
+        $sql = "DELETE FROM proveedor WHERE id_proveedor = {$idEliminar}";
+
+        $resultado = mysqli_query($conexion, $sql);
+    }
+
+  
 
     ?>
 
@@ -42,7 +46,34 @@
 
     <main class="contenedor seccion">
         <h1 class="titulo-table">Administrador de Proveedores</h1>
+        
 
+        <?php
+
+
+        if (isset($resultado)) {
+            $filasAfectadas = mysqli_affected_rows($conexion);
+
+            if ($filasAfectadas > 0) { ?>
+
+                <div class="notificacion exito">
+                    <p>Proveedor eliminado correctamente</p>
+                </div>
+
+            <?php } else { ?>
+
+                <div class="notificacion error">
+                    <p>Error al eliminar el proveedor</p>
+                </div>
+
+        <?php }
+        }
+
+
+
+        ?>
+
+        
         <a href="./formulario-admin.php?form=proveedor" class="boton boton-verde">Nuevo Proveedor</a>
 
 
@@ -64,8 +95,8 @@
 
                 <?php
 
-                $query = "SELECT * FROM proveedor";
-                list($totalPaginas, $resultadoPaginacion) = paginar(3, 'proveedor', $conexion, $query);
+                $query = "SELECT * FROM proveedor ORDER BY id_proveedor ASC";
+                list($totalPaginas, $resultadoPaginacion) = paginar(5, 'proveedor', $conexion, $query);
 
                 foreach ($resultadoPaginacion as $fila) { ?>
 
@@ -78,8 +109,9 @@
 
                         <td>
                             <div class="w-100">
-                            <a href="proveedores-admin.php?idEliminar=<?php echo $fila['id_proveedor'] ?>" class="boton-rojo-block eliminarRegistro">ELIMINAR PRODUCTO</a>
-                                <a href="#" class="boton-naranja-block">VER / ACTUALIZAR PRODUCTO</a>
+                                <a onclick="confirmarEliminacion(<?php echo $fila['id_proveedor']; ?>, '<?php echo $fila['nombre_proveedor']; ?>')" class="boton-rojo-block">ELIMINAR proveedor</a>
+
+                                <a href="./formulario-admin.php?form=proveedor&id=<?php echo $fila['id_proveedor'] ?>" class="boton-naranja-block">VER / ACTUALIZAR proveedor</a>
                             </div>
                         </td>
                     </tr>
@@ -105,14 +137,14 @@
 </body>
 
 <script>
+    function confirmarEliminacion(idEliminar, nombreEliminar) {
+        var confirmacion = confirm("¿Desea eliminar el proveedor " + nombreEliminar + " ?")
 
-    function mostrarAlerta() {
-    alert("¡Hola! Esto es un mensaje de alerta.");
-  }
+        if (confirmacion) {
+            window.location.href = "proveedores-admin.php?idEliminar=" + idEliminar;
+        }
 
-  // Llamar a la función al cargar la página (esto es opcional)
-  mostrarAlerta();
-  
+    }
 </script>
 
 </html>
