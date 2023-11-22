@@ -41,6 +41,9 @@
 
 </body>
 
+<?php mysqli_close($conexion); ?>
+
+
 <script>
 
 function editar() {

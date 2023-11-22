@@ -139,6 +139,9 @@
 
     </main>
 
+    <?php mysqli_close($conexion); ?>
+
+
 </body>
 
 <script>

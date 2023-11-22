@@ -33,13 +33,13 @@
 
         <div class="dashboard-cards">
 
-        
+
             <div class="card">
 
-            
+
                 <h2 class="h2-card">Usuarios registrados(no admins)</h2>
 
-                
+
                 <?php
 
                 //consulta para que devuleva la cantidad de usuarios diferentes de nivel 3
@@ -115,7 +115,7 @@
         </div>
     </main>
 
-
+    <?php mysqli_close($conexion); ?>
 
 
 </body>
