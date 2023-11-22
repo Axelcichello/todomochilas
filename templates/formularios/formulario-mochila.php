@@ -30,7 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombreFoto = "";
 
 
-
     if (isset($_FILES) && $_FILES['foto']['name'] != "") {
 
 
@@ -55,7 +54,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-
+    if ($_FILES['foto']['size'] > 1000000 && isset($_FILES) && $_FILES['foto']['name'] != "") {
+        array_push($errores, "Archivo muy grande");
+    }
 
     if (!isset($nombre) || $nombre === '') {
         array_push($errores, "El nombre no puede ir vacio");

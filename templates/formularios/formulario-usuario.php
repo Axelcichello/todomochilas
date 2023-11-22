@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
     $password2 = $_POST['password2'];
 
+
     if (!isset($nombre) || $nombre === '') {
         array_push($errores, "El nombre no puede ir vacio");
     }
