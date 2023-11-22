@@ -2,6 +2,8 @@
 
 if (isset($_GET['id'])) {
 
+    //Funcion para cargar los datos para editar
+
     $idBuscar = $_GET['id'];
 
     $query = "SELECT * FROM mochila INNER JOIN proveedor ON mochila.proveedor_id_proveedor = proveedor.id_proveedor";
@@ -19,7 +21,7 @@ if (isset($_GET['id'])) {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-
+    //Saneos  
 
     $nombre = saneoString($_POST['nombre'], $caracteresEspeciales);
     $proveedor = intval(filter_var($_POST['proveedor'], FILTER_SANITIZE_NUMBER_INT));
@@ -32,27 +34,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (isset($_FILES) && $_FILES['foto']['name'] != "") {
 
+        //Manejo de archivo
+
 
         $archivo = $_FILES['foto'];
         $tipoArchivo = $_FILES['foto']['type'];
 
         if ($tipoArchivo == "image/jpg" || $tipoArchivo == "image/png" || $tipoArchivo == "image/jpeg") {
 
+            //Evaluacion de extencion
             $extencionFoto = evaluarExtencion($tipoArchivo);
 
+            //Genero nombre para guardarlo en la bbdd con la extencion
             $nombreFoto = md5(uniqid($_FILES['foto']['name'])) . $extencionFoto;
 
             $rutaDestino = DIR_MOCHILA . $nombreFoto;
 
+            //Creo directorio si es que no existe
             if (!is_dir(DIR_MOCHILA)) {
                 mkdir(DIR_MOCHILA);
             }
 
+            //Guardo el archivo
             move_uploaded_file($archivo['tmp_name'], $rutaDestino);
-
-            
         }
     }
+
+    //validaciones
 
     if ($_FILES['foto']['size'] > 1000000 && isset($_FILES) && $_FILES['foto']['name'] != "") {
         array_push($errores, "Archivo muy grande");

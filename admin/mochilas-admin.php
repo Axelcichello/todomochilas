@@ -22,10 +22,13 @@
 
     isAuth();
 
+    //Se carga el listado de mochilas
 
     $conexion = conectarDDBB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
     if (isset($_GET) && isset($_GET['idEliminar'])) {
+
+        //Funcion para eliminar la mochila (se usa funcion en js del boton eliminar)
 
         $idEliminar = $_GET['idEliminar'];
 

@@ -35,10 +35,14 @@
 
         
             <div class="card">
+
+            
                 <h2 class="h2-card">Usuarios registrados(no admins)</h2>
 
+                
                 <?php
 
+                //consulta para que devuleva la cantidad de usuarios diferentes de nivel 3
 
                 $sql = "SELECT COUNT(*) AS cantUsuarios FROM usuario WHERE nivel_usuario != 3";
                 $respuesta = mysqli_query($conexion, $sql);
@@ -57,6 +61,7 @@
 
                 <?php
 
+                //Consulta que devuelve la cantidad de mochilas cargadas
 
                 $sql = "SELECT COUNT(*) AS cantMochilas FROM mochila";
                 $respuesta = mysqli_query($conexion, $sql);
@@ -75,6 +80,7 @@
 
                 <?php
 
+                //Consulta que muestra el ultimo proveedor registrado
 
                 $sql = "SELECT (nombre_proveedor) FROM proveedor ORDER BY id_proveedor DESC ";
                 $respuesta = mysqli_query($conexion, $sql);
@@ -93,6 +99,7 @@
 
                 <?php
 
+                //Suma el total de cada precio de las mochilas registradas
 
                 $sql = "SELECT SUM(precio_mochila) as total FROM mochila";
                 $respuesta = mysqli_query($conexion, $sql);

@@ -24,6 +24,9 @@
 
     $conexion = conectarDDBB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
+    //Formulario template general
+    //Se evalua que formulario se va a cargar dependiendo el tipo que se pase por url
+
 
     $form = cargarFormulario($_GET['form']);
 

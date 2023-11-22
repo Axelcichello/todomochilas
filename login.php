@@ -8,17 +8,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     include_once './functions/funciones.php';
     include_once './functions/arrays.php';
 
-    $conexion = conectarDDBB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+    $mysqli = conectarDDBB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
+    //Inicia la preparada
+
+    $query = "SELECT * FROM usuario WHERE correo_usuario = ? AND password_usuario = ?";
+    $stmt = $mysqli->prepare($query);
+
+    //Enlaza valores segun el tipo y la variable
+
+    $stmt->bind_param("ss", $correo, $password);
     $correo = $_POST['correo'];
     $password = $_POST['password'];
 
-    $query = "SELECT * FROM usuario WHERE correo_usuario = '${correo}' AND password_usuario = '${password}'";
-    $respuesta = mysqli_query($conexion, $query);
+    //Ejecuta la consulta
 
-    if (mysqli_num_rows($respuesta) === 1) {
+    $stmt->execute();
 
-        $datos = mysqli_fetch_assoc($respuesta);
+    //Procesa los resultados
+
+    $result = $stmt->get_result();
+
+    //Si devuelve una columna es por que encontro un usuario con el pass correspondiente
+    
+    if (mysqli_num_rows($result) === 1) {
+
+        $datos = mysqli_fetch_assoc($result);
+
+        //Se inicia una sesion y se cargan los datos 
 
         session_start();
 
@@ -33,9 +50,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("Location: ./admin/dashboard-admin.php");
 
     } else {
+        //Si no se encuentra nada se muestra el error
         array_push($errores, "Usuario o contraseña incorrecta");
         notificarErrores($errores);
     }
+
+
+
+
+
+    
 }
 
 
