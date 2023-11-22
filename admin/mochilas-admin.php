@@ -91,8 +91,10 @@
 
                 <?php
 
+                //Trae todo de la tabla mochila junto con la tabla de proveedor por la clave foranea
                 $query = "SELECT * FROM mochila INNER JOIN proveedor ON mochila.proveedor_id_proveedor = proveedor.id_proveedor ORDER BY id_mochila ASC";
 
+                //la funcion paginar toma los datos de las tablas y devuelve dos valores que se asignan a las variables
                 list($totalPaginas, $resultadoPaginacion) = paginar(5, 'mochila', $conexion, $query);
 
 
@@ -128,6 +130,7 @@
 
 
         <div class="indices">
+            <!-- se cargan los indices -->
             <?php indices($totalPaginas); ?>
         </div>
 
