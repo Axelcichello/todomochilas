@@ -90,24 +90,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($respuesta == TRUE) { ?>
 
                 <div class="notificacion exito">
-                    <p>Proveedor actualizado correctamente</p>
+                    <p>Usuario actualizado correctamente</p>
                 </div>
 
 <?php }
         }
     }
 }
-
-
-
 ?>
 
+<?php if (isset($idBuscar)) { ?>
+    <h2 class="subtitulo">EDITAR Usuario</h2>
 
-<h2 class="subtitulo">REGISTRAR usuario</h2>
+<?php } else { ?>
+    <h2 class="subtitulo">REGISTRAR usuario</h2>
 
-<?php echo isset($_GET['id']) ? '<button class="boton-editar" onclick="editar()" type="button">Editar Proveedor</button>' : '' ?>
+<?php } ?>
 
-<form method="POST" action="./formulario-admin.php?form=usuario&id=<?php echo $_GET['id'] ?>" class="formulario" enctype="multipart/form-data">
+
+<?php echo isset($_GET['id']) ? '<button class="boton-editar" onclick="editar()" type="button">EDITAR USUARIO</button>' : ''; ?>
+
+
+<?php if (isset($idBuscar)) { ?>
+
+    <form action="./formulario-admin.php?form=usuario&id=<?php echo $_GET['id'] ?>" method="POST" class="formulario">
+
+
+    <?php } else { ?>
+
+        <form action="./formulario-admin.php?form=usuario" method="POST" class="formulario">
+
+        <?php } ?>
 
     <fieldset>
         <legend>Informacion del usuario</legend>
@@ -132,10 +145,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <?php if (!isset($_GET['id'])) { ?>
 
             <label for=password">Contraseña del usuario</label>
-            <input type="text" id="password" name="password" oninput="verificarPassword()" placeholder="Ingrese contraseña del usuario">
+            <input type="password" id="password" name="password" oninput="verificarPassword()" placeholder="Ingrese contraseña del usuario">
 
             <label for="password2">Repetir contraseña</label>
-            <input type="text" name="password2" id="password2" oninput="verificarPassword()" placeholder="Repetir contraseña">
+            <input type="password" name="password2" id="password2" oninput="verificarPassword()" placeholder="Repetir contraseña">
 
         <?php } ?>
 

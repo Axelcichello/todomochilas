@@ -30,7 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombreFoto = "";
 
 
+
     if (isset($_FILES) && $_FILES['foto']['name'] != "") {
+
 
         $archivo = $_FILES['foto'];
         $tipoArchivo = $_FILES['foto']['type'];
@@ -48,6 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
 
             move_uploaded_file($archivo['tmp_name'], $rutaDestino);
+
+            
         }
     }
 
@@ -83,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($respuesta == true) { ?>
 
                 <div class="notificacion exito">
-                    <p>Proveedor registrado correctamente</p>
+                    <p>Mochila registrada correctamente</p>
                 </div>
 
             <?php }
@@ -101,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($respuesta == TRUE) { ?>
 
                 <div class="notificacion exito">
-                    <p>Proveedor actualizado correctamente</p>
+                    <p>Mochila actualizada correctamente</p>
                 </div>
 
 <?php }
@@ -109,16 +113,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-
 ?>
 
 
-<h2 class="subtitulo">REGISTRAR mochila</h2>
-
-<?php echo isset($_GET['id']) ? '<button class="boton-editar" onclick="editar()" type="button">Editar Proveedor</button>' : '' ?>
 
 
-<form method="POST" action="./formulario-admin.php?form=mochila&id=<?php echo $_GET['id'] ?>" class="formulario" enctype="multipart/form-data">
+
+
+<?php if (isset($idBuscar)) { ?>
+    <h2 class="subtitulo">EDITAR Mochila</h2>
+
+<?php } else { ?>
+    <h2 class="subtitulo">REGISTRAR mochila</h2>
+<?php } ?>
+
+<?php echo isset($_GET['id']) ? '<button class="boton-editar" onclick="editar()" type="button">EDITAR MOCHILA</button>' : ''; ?>
+
+<?php if (isset($idBuscar)) { ?>
+
+    <form action="./formulario-admin.php?form=mochila&id=<?php echo $_GET['id'] ?>" enctype="multipart/form-data" method="POST" class="formulario">
+
+    <?php } else { ?>
+
+        <form action="./formulario-admin.php?form=mochila" method="POST" enctype="multipart/form-data" class="formulario">
+
+        <?php } ?>
 
     <fieldset>
         <legend>Informacion General del Producto</legend>

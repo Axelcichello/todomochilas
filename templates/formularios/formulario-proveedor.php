@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <h2 class="subtitulo">EDITAR proveedor</h2>
 
 <?php } else { ?>
-
+    <h2 class="subtitulo">REGISTRAR proveedor</h2>
 <?php } ?>
 
 
@@ -132,11 +132,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form action="./formulario-admin.php?form=proveedor" method="POST" class="formulario">
 
         <?php } ?>
-
-
-
-
-
 
 
         <fieldset>
