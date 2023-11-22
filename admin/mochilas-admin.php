@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/estilos-admin.css">
     <link rel="stylesheet" href="../css/normalizer.css">
 
-    <title>Document</title>
+    <title>TodoMochilasADM | Mochilas</title>
 </head>
 
 <body>

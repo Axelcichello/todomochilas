@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/estilos-admin.css">
     <link rel="stylesheet" href="../css/normalizer.css">
-    <title>Nuevo Producto | Dashboard</title>
+    <title>TodoMochilasADM | Formulario <?php echo $_GET['form'] ?></title>
 </head>
 
 <body>

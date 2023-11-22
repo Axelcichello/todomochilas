@@ -53,47 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //Si no se encuentra nada se muestra el error
         array_push($errores, "Usuario o contraseña incorrecta");
         notificarErrores($errores);
-    }
-
-
-
-
-
-    
+    }    
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ?>
 
@@ -107,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/normalizer.css">
     <link rel="stylesheet" href="css/estilos.css">
-    <title>Login | TodoMochilas</title>
+    <title>TodoMochilas | Login</title>
 </head>
 
 <body>
@@ -128,5 +89,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 </body>
+
+<?php mysqli_close($mysqli); ?>
+
 
 </html>
