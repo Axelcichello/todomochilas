@@ -103,7 +103,7 @@
                     <tr>
                         <td><?php echo $fila['id_mochila'] ?></td>
                         <td><?php echo $fila['nombre_mochila'] ?></td>
-                        <td><?php echo $fila['precio_mochila'] ?></td>
+                        <td>$<?php echo $fila['precio_mochila'] ?></td>
                         <td>
                             <img class="foto-mochila-adm" src="../img/mochilas/<?php echo $fila['foto_mochila'] ?>" alt="foto">
                         </td>
