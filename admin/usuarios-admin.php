@@ -26,14 +26,9 @@
 
     $conexion = conectarDDBB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
-    if (isset($_GET) && isset($_GET['idEliminar'])) {
+    $resultado = eliminarElemento($idEliminar, $_GET['idEliminar'], 'usuario', 'id_usuario' ,$conexion);
 
-        $idEliminar = $_GET['idEliminar'];
-
-        $sql = "DELETE FROM usuario WHERE id_usuario = {$idEliminar}";
-
-        $resultado = mysqli_query($conexion, $sql);
-    }
+    
 
 
 
@@ -46,30 +41,7 @@
     <main class="contenedor seccion">
         <h1 class="titulo-table">Administrador de Usuarios</h1>
 
-        <?php
-
-
-        if (isset($resultado)) {
-            $filasAfectadas = mysqli_affected_rows($conexion);
-
-            if ($filasAfectadas > 0) { ?>
-
-                <div class="notificacion exito">
-                    <p>usuario eliminado correctamente</p>
-                </div>
-
-            <?php } else { ?>
-
-                <div class="notificacion error">
-                    <p>Error al eliminar el usuario</p>
-                </div>
-
-        <?php }
-        }
-
-
-
-        ?>
+        <?php verificarEliminacion($resultado, $conexion, 'usuario'); ?>
 
 
 
@@ -137,13 +109,23 @@
 
 </body>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function confirmarEliminacion(idEliminar, nombreEliminar) {
-        var confirmacion = confirm("¿Desea eliminar el usuario " + nombreEliminar + " ?")
 
-        if (confirmacion) {
-            window.location.href = "usuarios-admin.php?idEliminar=" + idEliminar;
-        }
+        Swal.fire({
+            title: "¿Estas seguro?",
+            text: "vas a eliminar el usuario " + nombreEliminar + " id " + idEliminar + "!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Eliminar!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "usuarios-admin.php?idEliminar=" + idEliminar;
+            }
+        });
 
     }
 </script>

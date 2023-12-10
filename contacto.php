@@ -89,16 +89,15 @@
 </body>
 
 <script>
+    function validarFormulario() {
+        const nombre = document.getElementById("nombre").value;
+        const apellido = document.getElementById("apellido").value;
+        const telefono = document.getElementById("telefono").value;
+        const email = document.getElementById("email").value;
+        const mensaje = document.getElementById("mensaje").value;
+        // const talle = document.getElementById("mochila").value;
 
-function validarFormulario(){
-            const nombre = document.getElementById("nombre").value;
-            const apellido = document.getElementById("apellido").value;
-            const telefono = document.getElementById("telefono").value;
-            const email = document.getElementById("email").value;
-            const mensaje = document.getElementById("mensaje").value;
-           // const talle = document.getElementById("mochila").value;
-
-           if (nombre.trim() === "") {
+        if (nombre.trim() === "") {
             alert("Por favor, ingrese su nombre");
             return false;
         }
@@ -106,26 +105,26 @@ function validarFormulario(){
         if (apellido.trim() === "") {
             alert("Por favor, ingrese su apellido");
             return false;
-        } 
+        }
 
-         if (telefono.trim() === "") {
+        if (telefono.trim() === "") {
             alert("Por favor, ingrese un teléfono");
             return false;
-        } 
+        }
 
-         if (email.trim() === "") {
+        if (email.trim() === "") {
             alert("Por favor, ingrese su email");
             return false;
         }
 
-          if (mensaje.trim() === "") {
+        if (mensaje.trim() === "") {
             alert("Por favor, ingrese un mensaje");
             return false;
         }
 
         return true;
 
-        }
+    }
 
 
     //Variables para terminos

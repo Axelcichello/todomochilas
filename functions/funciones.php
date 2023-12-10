@@ -201,3 +201,39 @@ function isAdmin(){
         header('Location: dashboard-admin.php');
     }
 }
+
+
+//function para verificar si un dato fue eliminado y mostrar la notificacion correspondiente
+function verificarEliminacion($resultado, $conexion, $entidad){
+
+    if (isset($resultado)) {
+        $filasAfectadas = mysqli_affected_rows($conexion);
+
+        if ($filasAfectadas > 0) { ?>
+
+            <div class="notificacion exito">
+                <p><?php echo $entidad ?> eliminada correctamente</p>
+            </div>
+
+        <?php } else { ?>
+
+            <div class="notificacion error">
+                <p>Error al eliminar <?php echo $entidad ?></p>
+            </div>
+
+    <?php }
+    }
+}
+
+
+//Funcion para eliminar los elementos de una base de datos
+function eliminarElemento($idEliminar, $getId, $tabla, $idTabla, $conn){
+    if (isset($_GET) && isset($getId)) {
+
+        $idEliminar = $getId;
+
+        $sql = "DELETE FROM {$tabla} WHERE {$idTabla} = {$idEliminar}";
+
+        return mysqli_query($conn, $sql);
+    }
+}

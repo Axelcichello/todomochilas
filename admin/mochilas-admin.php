@@ -26,16 +26,7 @@
 
     $conexion = conectarDDBB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
-    if (isset($_GET) && isset($_GET['idEliminar'])) {
-
-        //Funcion para eliminar la mochila (se usa funcion en js del boton eliminar)
-
-        $idEliminar = $_GET['idEliminar'];
-
-        $sql = "DELETE FROM mochila WHERE id_mochila = {$idEliminar}";
-
-        $resultado = mysqli_query($conexion, $sql);
-    }
+    $resultado = eliminarElemento($idEliminar, $_GET['idEliminar'], 'mochila', 'id_mochila', $conexion);
 
 
     ?>
@@ -49,26 +40,7 @@
 
         <?php
 
-
-        if (isset($resultado)) {
-            $filasAfectadas = mysqli_affected_rows($conexion);
-
-            if ($filasAfectadas > 0) { ?>
-
-                <div class="notificacion exito">
-                    <p>Mochila eliminada correctamente</p>
-                </div>
-
-            <?php } else { ?>
-
-                <div class="notificacion error">
-                    <p>Error al eliminar la mochila</p>
-                </div>
-
-        <?php }
-        }
-
-
+        verificarEliminacion($resultado, $conexion, 'mochila');
 
         ?>
 
@@ -144,13 +116,23 @@
 
 </body>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function confirmarEliminacion(idEliminar, nombreEliminar) {
-        var confirmacion = confirm("¿Desea eliminar la mochila " + nombreEliminar + " ?")
 
-        if (confirmacion) {
-            window.location.href = "mochilas-admin.php?idEliminar=" + idEliminar;
-        }
+        Swal.fire({
+            title: "¿Estas seguro?",
+            text: "vas a eliminar la mochila " + nombreEliminar + " id " + idEliminar + "!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Eliminar!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "mochilas-admin.php?idEliminar=" + idEliminar;
+            }
+        });
 
     }
 </script>
