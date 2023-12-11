@@ -32,7 +32,7 @@
 
             $conexion = conectarDDBB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
-            $mochilas = traerTodo('mochila', $conexion);
+            $mochilas = traerTodo('mochila', $conexion, '');
 
 
             foreach ($mochilas as $mochila) { ?>

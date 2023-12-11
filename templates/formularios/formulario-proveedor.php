@@ -4,16 +4,11 @@
 
 if (isset($_GET['id'])) {
 
+    $agregado = "";
     $idBuscar = $_GET['id'];
 
-    $proveedores = traerTodo('proveedor', $conexion);
-
-    foreach ($proveedores as $proveedor) {
-
-        if ($proveedor['id_proveedor'] == $idBuscar) {
-            $buscado[] = $proveedor;
-        }
-    }
+    $proveedores = traerTodo('proveedor', $conexion, $agregado);
+    $buscado = traerBuscado($proveedores, $idBuscar, 'proveedor');
 }
 
 //Si se entra mediante un POST pasara a la parte de saneo, validacion e insersion en la BBDD
@@ -54,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         array_push($errores, "El localidad no puede ir vacia");
     }
 
-    
+
 
     if (!isset($_GET['id'])) {
 
@@ -79,13 +74,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $respuesta = mysqli_query($conexion, $query);
 
 
-            if ($respuesta == TRUE) { ?>
-
-                <div class="notificacion exito">
-                    <p>Proveedor registrado correctamente</p>
-                </div>
-
-            <?php }
+            if ($respuesta == TRUE) {
+                notificacionExito("proveedor", "registrado");
+            }
         }
     } else {
 
@@ -97,13 +88,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $respuesta = mysqli_query($conexion, $sql);
 
-            if ($respuesta == TRUE) { ?>
+            if ($respuesta == TRUE) {
 
-                <div class="notificacion exito">
-                    <p>Proveedor actualizado correctamente</p>
-                </div>
-
-<?php }
+                notificacionExito("proveedor", "actualizado");
+            }
         }
     }
 }

@@ -6,9 +6,9 @@ include_once './config.php';
 
 //traerTodo permite traer todo el contenido de una tabla de mysql sin tener que repetir el 
 //query en el view. Se le pasa la tabla a buscar y la conexion
-function traerTodo($tabla, $conn)
+function traerTodo($tabla, $conn, $agregado)
 {
-    $query = "SELECT * FROM $tabla";
+    $query = "SELECT * FROM $tabla " . $agregado;
     $query = mysqli_query($conn, $query);
 
     if (mysqli_num_rows($query) > 0) {
@@ -20,6 +20,19 @@ function traerTodo($tabla, $conn)
     } else {
         return "error";
     }
+}
+
+function traerBuscado($todo, $idBuscado, $entidad)
+{
+
+    foreach ($todo as $cadaUno) {
+
+        if ($cadaUno['id_' . $entidad] == $idBuscado) {
+            $buscado[] = $cadaUno;
+        }
+    }
+
+    return $buscado;
 }
 
 
@@ -99,7 +112,7 @@ function mostrarProducto($productos)
 
         </form>
 
-<?php }
+        <?php }
 }
 
 //Metodo de saneo
@@ -189,22 +202,25 @@ function indices($totalPaginas)
 }
 
 //Funcion para mandar a logear usuario si no lo esta
-function isAuth(){
-    if(!isset($_SESSION['sesion'])){
+function isAuth()
+{
+    if (!isset($_SESSION['sesion'])) {
         header('Location: ../login.php');
     }
 }
 
 //Funcion para determinar si un usuario es admin y asi mostrar la pestaña de usuarios
-function isAdmin(){
-    if(!isset($_SESSION['sesion']) || $_SESSION['nivel'] != 3){
+function isAdmin()
+{
+    if (!isset($_SESSION['sesion']) || $_SESSION['nivel'] != 3) {
         header('Location: dashboard-admin.php');
     }
 }
 
 
 //function para verificar si un dato fue eliminado y mostrar la notificacion correspondiente
-function verificarEliminacion($resultado, $conexion, $entidad){
+function verificarEliminacion($resultado, $conexion, $entidad)
+{
 
     if (isset($resultado)) {
         $filasAfectadas = mysqli_affected_rows($conexion);
@@ -227,7 +243,8 @@ function verificarEliminacion($resultado, $conexion, $entidad){
 
 
 //Funcion para eliminar los elementos de una base de datos
-function eliminarElemento($idEliminar, $getId, $tabla, $idTabla, $conn){
+function eliminarElemento($idEliminar, $getId, $tabla, $idTabla, $conn)
+{
     if (isset($_GET) && isset($getId)) {
 
         $idEliminar = $getId;
@@ -237,3 +254,38 @@ function eliminarElemento($idEliminar, $getId, $tabla, $idTabla, $conn){
         return mysqli_query($conn, $sql);
     }
 }
+
+function guardarFotoFormulario($extencion, $foto)
+{
+    $nombreFoto = "";
+
+    if ($extencion == "image/jpg" || $extencion == "image/png" || $extencion == "image/jpeg") {
+
+        //Evaluacion de extencion
+        $extencionFoto = evaluarExtencion($extencion);
+
+        //Genero nombre para guardarlo en la bbdd con la extencion
+        $nombreFoto = md5(uniqid($_FILES['foto']['name'])) . $extencionFoto;
+
+        $rutaDestino = DIR_MOCHILA . $nombreFoto;
+
+        //Creo directorio si es que no existe
+        if (!is_dir(DIR_MOCHILA)) {
+            mkdir(DIR_MOCHILA);
+        }
+
+        //Guardo el archivo
+        move_uploaded_file($foto['tmp_name'], $rutaDestino);
+    }
+
+    return $nombreFoto;
+}
+
+function notificacionExito($tipo, $accion)
+{ ?>
+
+    <div class="notificacion exito">
+        <p><?php echo $tipo . " " . $accion ?> correctamente</p>
+    </div>
+
+<?php }

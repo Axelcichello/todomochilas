@@ -4,19 +4,13 @@ if (isset($_GET['id'])) {
 
     //Funcion para cargar los datos para editar
 
+    $agregado = "INNER JOIN proveedor ON mochila.proveedor_id_proveedor = proveedor.id_proveedor";
     $idBuscar = $_GET['id'];
 
-    $query = "SELECT * FROM mochila INNER JOIN proveedor ON mochila.proveedor_id_proveedor = proveedor.id_proveedor";
-    $query = mysqli_query($conexion, $query);
+    $mochilas = traerTodo('mochila', $conexion, $agregado);
+    $buscado = traerBuscado($mochilas, $idBuscar, 'mochila');
 
-    if (mysqli_num_rows($query) > 0) {
-
-        while ($row = mysqli_fetch_assoc($query)) {
-            if ($row['id_mochila'] == $idBuscar) {
-                $buscado[] = $row;
-            }
-        }
-    }
+    $nombreFoto = $buscado[0]['foto_mochila'];
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -29,35 +23,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stock = intval(filter_var($_POST['stock'], FILTER_SANITIZE_NUMBER_INT));
     $descripcion = saneoString($_POST['descripcion'], $caracteresEspeciales);
 
-    $nombreFoto = "";
+
 
 
     if (isset($_FILES) && $_FILES['foto']['name'] != "") {
 
         //Manejo de archivo
-
-
         $archivo = $_FILES['foto'];
         $tipoArchivo = $_FILES['foto']['type'];
 
-        if ($tipoArchivo == "image/jpg" || $tipoArchivo == "image/png" || $tipoArchivo == "image/jpeg") {
-
-            //Evaluacion de extencion
-            $extencionFoto = evaluarExtencion($tipoArchivo);
-
-            //Genero nombre para guardarlo en la bbdd con la extencion
-            $nombreFoto = md5(uniqid($_FILES['foto']['name'])) . $extencionFoto;
-
-            $rutaDestino = DIR_MOCHILA . $nombreFoto;
-
-            //Creo directorio si es que no existe
-            if (!is_dir(DIR_MOCHILA)) {
-                mkdir(DIR_MOCHILA);
-            }
-
-            //Guardo el archivo
-            move_uploaded_file($archivo['tmp_name'], $rutaDestino);
-        }
+        $nombreFoto = guardarFotoFormulario($tipoArchivo, $archivo);
     }
 
     //validaciones
@@ -93,13 +68,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $respuesta = mysqli_query($conexion, $query);
 
-            if ($respuesta == true) { ?>
+            if ($respuesta == true) {
 
-                <div class="notificacion exito">
-                    <p>Mochila registrada correctamente</p>
-                </div>
+                notificacionExito("mochila", "registrada"); ?>
 
-            <?php }
+<?php }
         }
     } else {
 
@@ -111,13 +84,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $respuesta = mysqli_query($conexion, $sql);
 
-            if ($respuesta == TRUE) { ?>
+            if ($respuesta == TRUE) {
 
-                <div class="notificacion exito">
-                    <p>Mochila actualizada correctamente</p>
-                </div>
-
-<?php }
+                notificacionExito("mochila", "actualizada");
+            }
         }
     }
 }
@@ -148,53 +118,54 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <?php } ?>
 
-    <fieldset>
-        <legend>Informacion General del Producto</legend>
+        <fieldset>
+            <legend>Informacion General del Producto</legend>
 
-        <label for="nombre">Nombre de la mochila</label>
-        <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="text" value="<?php echo (isset($_GET) ? $buscado[0]['nombre_mochila'] : "") ?>" id="nombre" name="nombre" placeholder="Ingrese nombre del producto">
+            <label for="nombre">Nombre de la mochila</label>
+            <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="text" value="<?php echo (isset($_GET) ? $buscado[0]['nombre_mochila'] : "") ?>" id="nombre" name="nombre" placeholder="Ingrese nombre del producto">
 
-        <label for="proveedor">Proveedor</label>
+            <label for="proveedor">Proveedor</label>
 
-        <select <?php echo isset($_GET['id']) ? 'disabled' : '' ?> name="proveedor" id="proveedor">
+            <select <?php echo isset($_GET['id']) ? 'disabled' : '' ?> name="proveedor" id="proveedor">
 
-            <?php if (!isset($_GET['id'])) {
+                <?php if (!isset($_GET['id'])) {
 
-                $proveedores = traerTodo('proveedor', $conexion);
-                foreach ($proveedores as $proveedor) { ?>
+                    $proveedores = traerTodo('proveedor', $conexion, "");
+                ?><option value="0">-- Seleccione un proveedor --</option> <?php
+                                                                            foreach ($proveedores as $proveedor) { ?>
 
-                    <option value="<?php echo $proveedor['id_proveedor']; ?>"> <?php echo $proveedor['nombre_proveedor']; ?> </option>
+                        <option value="<?php echo $proveedor['id_proveedor']; ?>"> <?php echo $proveedor['nombre_proveedor']; ?> </option>
 
-                <?php  }
-            } else { ?>
-                <option value="<?php echo $buscado[0]['id_proveedor']; ?>"> <?php echo $buscado[0]['nombre_proveedor']; ?> </option>
+                    <?php  }
+                                                                        } else { ?>
+                    <option value="<?php echo $buscado[0]['id_proveedor']; ?>"> <?php echo $buscado[0]['nombre_proveedor']; ?> </option>
+                <?php } ?>
+            </select>
+
+            <label for="precio">precio</label>
+            <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="number" value="<?php echo (isset($_GET) ? $buscado[0]['precio_mochila'] : "") ?>" id="precio" name="precio" placeholder="Ingrese el precio">
+
+            <label for="stock">stock</label>
+            <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="number" value="<?php echo (isset($_GET) ? $buscado[0]['stock_mochila'] : "") ?>" name="stock" id="stock" placeholder="Ingrese el stock">
+
+            <label for="descripcion">descripcion</label>
+            <textarea <?php echo isset($_GET['id']) ? 'disabled' : '' ?> style="resize: none;" name="descripcion" id="descripcion" cols="30" rows="10"><?php echo (isset($_GET) ? $buscado[0]['descripcion_mochila'] : "") ?></textarea>
+
+            <label for="foto">foto</label>
+            <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="file" name="foto" id="foto" placeholder="Foto de la mochila">
+
+
+
+            <?php
+
+            if (isset($_GET['id'])) { ?>
+
+                <img class="mochila-editar" src="<?php echo DIR_MOCHILA . $buscado[0]['foto_mochila'] ?>" alt="Foto mochila buscada">
+
             <?php } ?>
-        </select>
 
-        <label for="precio">precio</label>
-        <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="number" value="<?php echo (isset($_GET) ? $buscado[0]['precio_mochila'] : "") ?>" id="precio" name="precio" placeholder="Ingrese el precio">
+        </fieldset>
 
-        <label for="stock">stock</label>
-        <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="number" value="<?php echo (isset($_GET) ? $buscado[0]['stock_mochila'] : "") ?>" name="stock" id="stock" placeholder="Ingrese el stock">
+        <input type="submit" class="boton boton-verde" value="REGISTRAR PRODUCTO">
 
-        <label for="descripcion">descripcion</label>
-        <textarea <?php echo isset($_GET['id']) ? 'disabled' : '' ?> style="resize: none;" name="descripcion" id="descripcion" cols="30" rows="10"><?php echo (isset($_GET) ? $buscado[0]['descripcion_mochila'] : "") ?></textarea>
-
-        <label for="foto">foto</label>
-        <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="file" name="foto" id="foto" placeholder="Foto de la mochila">
-
-
-
-        <?php
-
-        if (isset($_GET['id'])) { ?>
-
-            <img class="mochila-editar" src="<?php echo DIR_MOCHILA . $buscado[0]['foto_mochila'] ?>" alt="Foto mochila buscada">
-
-        <?php } ?>
-
-    </fieldset>
-
-    <input type="submit" class="boton boton-verde" value="REGISTRAR PRODUCTO">
-
-</form>
+        </form>

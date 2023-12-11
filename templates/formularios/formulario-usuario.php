@@ -6,14 +6,8 @@ if (isset($_GET['id'])) {
 
     $idBuscar = $_GET['id'];
 
-    $usuarios = traerTodo('usuario', $conexion);
-
-    foreach ($usuarios as $usuario) {
-
-        if ($usuario['id_usuario'] == $idBuscar) {
-            $buscado[] = $usuario;
-        }
-    }
+    $usuarios = traerTodo('usuario', $conexion, $agregado);
+    $buscado = traerBuscado($usuarios, $idBuscar, 'usuario');
 }
 
 
@@ -48,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         array_push($errores, "El correo no puede ir vacio");
     }
 
-    
+
 
 
     if (!isset($_GET['id'])) {
@@ -56,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!isset($password) || $password === '') {
             array_push($errores, "El password no puede ir vacio");
         }
-    
+
         if (!isset($password2) || $password2 === '') {
             array_push($errores, "El password repetido no puede ir vacio");
         } else if ($password != '' && $password != $password2) {
@@ -70,13 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $respuesta = mysqli_query($conexion, $query);
 
-            if ($respuesta ==    TRUE) { ?>
-
-                <div class="notificacion exito">
-                    <p>Usuario registrado correctamente</p>
-                </div>
-
-            <?php }
+            if ($respuesta ==    TRUE) {
+                notificacionExito("usuario", "registrado");
+            }
         }
     } else {
 
@@ -88,13 +78,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $respuesta = mysqli_query($conexion, $sql);
 
-            if ($respuesta == TRUE) { ?>
+            if ($respuesta == TRUE) {
 
-                <div class="notificacion exito">
-                    <p>Usuario actualizado correctamente</p>
-                </div>
-
-<?php }
+                notificacionExito("usuario", "actualizado");
+            }
         }
     }
 }
@@ -123,38 +110,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <?php } ?>
 
-    <fieldset>
-        <legend>Informacion del usuario</legend>
+        <fieldset>
+            <legend>Informacion del usuario</legend>
 
 
-        <label for="nombre">Nombre del usuario</label>
-        <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="text" value="<?php echo (isset($_GET) ? $buscado[0]['nombre_usuario'] : "") ?>" name="nombre" id="nombre" placeholder="Ingrese nombre del usuario">
+            <label for="nombre">Nombre del usuario</label>
+            <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="text" value="<?php echo (isset($_GET) ? $buscado[0]['nombre_usuario'] : "") ?>" name="nombre" id="nombre" placeholder="Ingrese nombre del usuario">
 
-        <label for="apellido">Apellido del usuario</label>
-        <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="text" value="<?php echo (isset($_GET) ? $buscado[0]['apellido_usuario'] : "") ?>" name="apellido" id="apellido" placeholder="Ingrese apellido del usuario">
+            <label for="apellido">Apellido del usuario</label>
+            <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="text" value="<?php echo (isset($_GET) ? $buscado[0]['apellido_usuario'] : "") ?>" name="apellido" id="apellido" placeholder="Ingrese apellido del usuario">
 
-        <label for="dni">DNI del usuario</label>
-        <input type="number" <?php echo isset($_GET['id']) ? 'disabled' : '' ?> value="<?php echo (isset($_GET) ? $buscado[0]['dni_usuario'] : "") ?>" name="dni" id="dni" placeholder="Ingrese DNI del usuario">
+            <label for="dni">DNI del usuario</label>
+            <input type="number" <?php echo isset($_GET['id']) ? 'disabled' : '' ?> value="<?php echo (isset($_GET) ? $buscado[0]['dni_usuario'] : "") ?>" name="dni" id="dni" placeholder="Ingrese DNI del usuario">
 
-        <label for="legajo">Legajo del usuario</label>
-        <input type="number" <?php echo isset($_GET['id']) ? 'disabled' : '' ?> value="<?php echo (isset($_GET) ? $buscado[0]['legajo_usuario'] : "") ?>" id="legajo" name="legajo" placeholder="Ingrese legajo del usuario">
+            <label for="legajo">Legajo del usuario</label>
+            <input type="number" <?php echo isset($_GET['id']) ? 'disabled' : '' ?> value="<?php echo (isset($_GET) ? $buscado[0]['legajo_usuario'] : "") ?>" id="legajo" name="legajo" placeholder="Ingrese legajo del usuario">
 
-        <label for="correo">Correo del usuario</label>
-        <input type="email" <?php echo isset($_GET['id']) ? 'disabled' : '' ?> value="<?php echo (isset($_GET) ? $buscado[0]['correo_usuario'] : "") ?>" id="correo" name="correo" placeholder="Ingrese correo del usuario">
+            <label for="correo">Correo del usuario</label>
+            <input type="email" <?php echo isset($_GET['id']) ? 'disabled' : '' ?> value="<?php echo (isset($_GET) ? $buscado[0]['correo_usuario'] : "") ?>" id="correo" name="correo" placeholder="Ingrese correo del usuario">
 
 
-        <?php if (!isset($_GET['id'])) { ?>
+            <?php if (!isset($_GET['id'])) { ?>
 
-            <label for=password">Contraseña del usuario</label>
-            <input type="password" id="password" name="password" oninput="verificarPassword()" placeholder="Ingrese contraseña del usuario">
+                <label for=password">Contraseña del usuario</label>
+                <input type="password" id="password" name="password" oninput="verificarPassword()" placeholder="Ingrese contraseña del usuario">
 
-            <label for="password2">Repetir contraseña</label>
-            <input type="password" name="password2" id="password2" oninput="verificarPassword()" placeholder="Repetir contraseña">
+                <label for="password2">Repetir contraseña</label>
+                <input type="password" name="password2" id="password2" oninput="verificarPassword()" placeholder="Repetir contraseña">
 
-        <?php } ?>
+            <?php } ?>
 
-    </fieldset>
+        </fieldset>
 
-    <input type="submit" class="boton boton-verde" value="REGISTRAR USUARIO">
+        <input type="submit" class="boton boton-verde" value="REGISTRAR USUARIO">
 
-</form>
+        </form>
