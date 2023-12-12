@@ -1,14 +1,16 @@
 <?php
 
+include_once './functions/config.php';
+include_once './functions/funciones.php';
+include_once './functions/arrays.php';
 
+$mysqli = conectarDDBB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    include_once './functions/config.php';
-    include_once './functions/funciones.php';
-    include_once './functions/arrays.php';
 
-    $mysqli = conectarDDBB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+
 
     //Inicia la preparada
 
@@ -30,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $result = $stmt->get_result();
 
     //Si devuelve una columna es por que encontro un usuario con el pass correspondiente
-    
+
     if (mysqli_num_rows($result) === 1) {
 
         $datos = mysqli_fetch_assoc($result);
@@ -48,12 +50,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['nivel'] = $datos['nivel_usuario'];
 
         header("Location: ./admin/dashboard-admin.php");
-
     } else {
         //Si no se encuentra nada se muestra el error
         array_push($errores, "Usuario o contraseña incorrecta");
         notificarErrores($errores);
-    }    
+    }
 }
 
 ?>
