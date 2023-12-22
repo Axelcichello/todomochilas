@@ -4,22 +4,37 @@ isAdmin();
 
 if (isset($_GET['id'])) {
 
+    //Funcion para cargar los datos para editar
+
+
     $idBuscar = $_GET['id'];
+    $agregado = '';
+
 
     $usuarios = traerTodo('usuario', $conexion, $agregado);
     $buscado = traerBuscado($usuarios, $idBuscar, 'usuario');
 }
 
+//Si se entra mediante un POST pasara a la parte de saneo, validacion e insersion en la BBDD
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    //Etapa de saneo
+
 
     $nombre = saneoString($_POST['nombre'], $caracteresEspeciales);
     $apellido = saneoString($_POST['apellido'], $caracteresEspeciales);
     $legajo = intval(filter_var($_POST['legajo'], FILTER_SANITIZE_NUMBER_INT));
     $dni = intval(filter_var($_POST['dni'], FILTER_SANITIZE_NUMBER_INT));
     $correo = filter_var($_POST['correo'], FILTER_SANITIZE_EMAIL);
-    $password = $_POST['password'];
-    $password2 = $_POST['password2'];
+
+    if (!isset($_GET['id'])) {
+
+        $password = $_POST['password'];
+        $password2 = $_POST['password2'];
+    }
+
+    //Etapa de validacion
 
 
     if (!isset($nombre) || $nombre === '') {
@@ -47,6 +62,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (!isset($_GET['id'])) {
 
+        //Validacion de correo repetido
+
+
         if (!isset($password) || $password === '') {
             array_push($errores, "El password no puede ir vacio");
         }
@@ -57,9 +75,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             array_push($errores, "Las contraseñas no coinciden");
         }
 
+        //Etapa de mostrar errores o continuar a la insersion
+
+
         if (count($errores) > 0) {
             notificarErrores($errores);
         } else {
+
+            //etapa de registro
+
             $query = "INSERT INTO usuario (nombre_usuario, apellido_usuario, dni_usuario, legajo_usuario, password_usuario, correo_usuario) VALUES ('{$nombre}', '{$apellido}', '{$dni}', '{$legajo}', '{$password}', '{$correo}')";
 
             $respuesta = mysqli_query($conexion, $query);
@@ -69,6 +93,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
     } else {
+
+        //esta es la parte de ediciopn
+        //muestra errores si los hay
 
         if (count($errores) > 0) {
             notificarErrores($errores);
@@ -87,6 +114,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
+<!-- muestra el titulo de editar o registrar segun sea el caso -->
+
+
 <?php if (isset($idBuscar)) { ?>
     <h2 class="subtitulo">EDITAR Usuario</h2>
 
@@ -95,44 +125,54 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <?php } ?>
 
+<!-- si es una edicion va a mostrar el boton para editar -->
 
-<?php echo isset($_GET['id']) ? '<button class="boton-editar" onclick="editar()" type="button">EDITAR USUARIO</button>' : ''; ?>
+
+
+<?php echo isset($_GET['id']) ? '<button class="boton-editar" id="editarBoton" onclick="editar()" type="button">EDITAR USUARIO</button>' : ''; ?>
 
 
 <?php if (isset($idBuscar)) { ?>
 
-    <form action="./formulario-admin.php?form=usuario&id=<?php echo $_GET['id'] ?>" method="POST" class="formulario">
+    <!-- carga el formulario segun sea de edicion o de registro -->
+
+
+    <form id="formG" action="./formulario-admin.php?form=usuario&id=<?php echo $_GET['id'] ?>" method="POST" class="formulario" onsubmit="return validarFormulario();">
 
 
     <?php } else { ?>
 
-        <form action="./formulario-admin.php?form=usuario" method="POST" class="formulario">
+        <form id="formG" action="./formulario-admin.php?form=usuario" method="POST" class="formulario" onsubmit="return validarFormulario();">
 
         <?php } ?>
 
         <fieldset>
+
+            <!-- si es un registro no se van a mostrar datos en los inputs
+        si es una edicion los campos van a estar rellenos con la info que se quiera ver o actualizar y se debera tocar en editar para que sea editable -->
+
             <legend>Informacion del usuario</legend>
 
 
             <label for="nombre">Nombre del usuario</label>
-            <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="text" value="<?php echo (isset($_GET) ? $buscado[0]['nombre_usuario'] : "") ?>" name="nombre" id="nombre" placeholder="Ingrese nombre del usuario">
+            <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="text" value="<?php echo (isset($_GET['id']) ? $buscado[0]['nombre_usuario'] : "") ?>" name="nombre" id="nombre" placeholder="Ingrese nombre del usuario">
 
             <label for="apellido">Apellido del usuario</label>
-            <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="text" value="<?php echo (isset($_GET) ? $buscado[0]['apellido_usuario'] : "") ?>" name="apellido" id="apellido" placeholder="Ingrese apellido del usuario">
+            <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="text" value="<?php echo (isset($_GET['id']) ? $buscado[0]['apellido_usuario'] : "") ?>" name="apellido" id="apellido" placeholder="Ingrese apellido del usuario">
 
             <label for="dni">DNI del usuario</label>
-            <input type="number" <?php echo isset($_GET['id']) ? 'disabled' : '' ?> value="<?php echo (isset($_GET) ? $buscado[0]['dni_usuario'] : "") ?>" name="dni" id="dni" placeholder="Ingrese DNI del usuario">
+            <input type="number" <?php echo isset($_GET['id']) ? 'disabled' : '' ?> value="<?php echo (isset($_GET['id']) ? $buscado[0]['dni_usuario'] : "") ?>" name="dni" id="dni" placeholder="Ingrese DNI del usuario">
 
             <label for="legajo">Legajo del usuario</label>
-            <input type="number" <?php echo isset($_GET['id']) ? 'disabled' : '' ?> value="<?php echo (isset($_GET) ? $buscado[0]['legajo_usuario'] : "") ?>" id="legajo" name="legajo" placeholder="Ingrese legajo del usuario">
+            <input type="number" <?php echo isset($_GET['id']) ? 'disabled' : '' ?> value="<?php echo (isset($_GET['id']) ? $buscado[0]['legajo_usuario'] : "") ?>" id="legajo" name="legajo" placeholder="Ingrese legajo del usuario">
 
             <label for="correo">Correo del usuario</label>
-            <input type="email" <?php echo isset($_GET['id']) ? 'disabled' : '' ?> value="<?php echo (isset($_GET) ? $buscado[0]['correo_usuario'] : "") ?>" id="correo" name="correo" placeholder="Ingrese correo del usuario">
+            <input type="email" <?php echo isset($_GET['id']) ? 'disabled' : '' ?> value="<?php echo (isset($_GET['id']) ? $buscado[0]['correo_usuario'] : "") ?>" id="correo" name="correo" placeholder="Ingrese correo del usuario">
 
 
             <?php if (!isset($_GET['id'])) { ?>
 
-                <label for=password">Contraseña del usuario</label>
+                <label for="password">Contraseña del usuario</label>
                 <input type="password" id="password" name="password" oninput="verificarPassword()" placeholder="Ingrese contraseña del usuario">
 
                 <label for="password2">Repetir contraseña</label>
@@ -142,6 +182,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         </fieldset>
 
-        <input type="submit" class="boton boton-verde" value="REGISTRAR USUARIO">
+        <!-- muestro el submit segun sea editar o registrar -->
+
+
+        <?php if (isset($idBuscar)) { ?>
+            <input type="submit" disabled class="boton boton-gris" value="ACTUALIZAR USUARIO">
+        <?php } else { ?>
+            <input type="submit" class="boton boton-verde" value="REGISTRAR USUARIO">
+        <?php } ?>
 
         </form>

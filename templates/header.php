@@ -1,3 +1,5 @@
+<!-- header de clientes     -->
+    
     <header>
         <div class="contenedor">
             <a href="index.php">

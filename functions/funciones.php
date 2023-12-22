@@ -1,6 +1,6 @@
 <?php
 
-include_once './config.php';
+//include_once './config.php';
 
 
 
@@ -22,9 +22,12 @@ function traerTodo($tabla, $conn, $agregado)
     }
 }
 
+//busca en un array un elemento mediante su id
+
 function traerBuscado($todo, $idBuscado, $entidad)
 {
 
+    //recorre todo
     foreach ($todo as $cadaUno) {
 
         if ($cadaUno['id_' . $entidad] == $idBuscado) {
@@ -255,7 +258,9 @@ function eliminarElemento($idEliminar, $getId, $tabla, $idTabla, $conn)
     }
 }
 
-function guardarFotoFormulario($extencion, $foto)
+
+//guarda una foto en la direccion que se le indiqie generandole un nombre
+function guardarFotoFormulario($extencion, $foto, $direccionMochila)
 {
     $nombreFoto = "";
 
@@ -267,11 +272,11 @@ function guardarFotoFormulario($extencion, $foto)
         //Genero nombre para guardarlo en la bbdd con la extencion
         $nombreFoto = md5(uniqid($_FILES['foto']['name'])) . $extencionFoto;
 
-        $rutaDestino = DIR_MOCHILA . $nombreFoto;
+        $rutaDestino = $direccionMochila . $nombreFoto;
 
         //Creo directorio si es que no existe
-        if (!is_dir(DIR_MOCHILA)) {
-            mkdir(DIR_MOCHILA);
+        if (!is_dir($direccionMochila)) {
+            mkdir($direccionMochila);
         }
 
         //Guardo el archivo
@@ -281,6 +286,8 @@ function guardarFotoFormulario($extencion, $foto)
     return $nombreFoto;
 }
 
+
+//notifica una accion exitosa
 function notificacionExito($tipo, $accion)
 { ?>
 

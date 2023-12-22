@@ -14,9 +14,13 @@
 
     <?php
 
+    //Incluyo archivos necesarios
+
     include 'functions/arrays.php';
     include 'functions/funciones.php';
     include 'templates/header.php';
+
+    //Etapa de saneo de campos del formulario
 
     $nombre = saneoString($_POST['nombre'], $caracteresEspeciales);
 
@@ -30,9 +34,11 @@
 
     $mochila = strip_tags($_POST['mochila']);
 
-    $foto = strip_tags($_POST['foto']);
 
 
+
+    //etapa de validacion
+    //valida cada uno de los campos saneados si estan vacios o tiene datos incorrectos no pasa la validacion backend y lo carga en array de errores
 
 
     if (!isset($nombre) || $nombre === "") {
@@ -70,6 +76,7 @@
         array_push($errores, "Debe cargar un mensaje");
     }
 
+
     ?>
 
     <main class="contenedor">
@@ -80,18 +87,22 @@
 
             <?php
 
+            //si se detectan errores los muestra
+
             if (count($errores) > 0) { ?>
 
 
                 <div class="notificar-error">
 
-                    <?php notificarErrores($errores); ?>
+                    <?php 
+                    //Funcion de mostrar errores
+                    notificarErrores($errores); ?>
 
                 </div>
 
                 <div class="div-fotomochila">
-                        <img src="./img/mochila-llorando.jpg" alt="Mochila llorando" class="foto-mochila">
-                    </div>
+                    <img src="./img/mochila-llorando.jpg" alt="Mochila llorando" class="foto-mochila">
+                </div>
 
 
 
@@ -99,7 +110,28 @@
                 <p>Por favor, vuelva a cargar el formulario.</p>
 
 
-            <?php } else { ?>
+            <?php } else {
+
+                //SI pasa las validaciones y esta todo bien empieza con la muestra de datos
+
+                //si hay foto la guarda y le genera un nombre
+
+                if (isset($_FILES) && $_FILES['foto']['name'] != "") {
+
+                    //Manejo de archivo
+                    $archivo = $_FILES['foto'];
+                    $tipoArchivo = $_FILES['foto']['type'];
+
+                    $nombreFoto = guardarFotoFormulario($tipoArchivo, $archivo, './img/consultas/');
+                }
+
+
+
+            ?>
+
+            
+
+                <!-- se muestran los datos cargados -->
 
                 <div class="notificacion exito">
                     <p>Datos cargados correctamente</p>

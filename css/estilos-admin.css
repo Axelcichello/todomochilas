@@ -89,6 +89,7 @@ tr:nth-child(even) {
 }
 
 .header {
+    z-index: 2;
     position: sticky;
     top: 0;
     background-color: #333;
@@ -141,7 +142,9 @@ tr:nth-child(even) {
     margin-top: 2.5rem;
 }
 
-.boton-editar{
+
+.boton-editar {
+    cursor: pointer;
     margin-bottom: 2rem;
     background-color: blue;
     border: none;
@@ -149,6 +152,18 @@ tr:nth-child(even) {
     display: inline-block;
     font-weight: 700;
     margin-top: 0rem;
+    padding: 1rem 3rem;
+    text-align: center;
+    text-decoration: none;
+}
+
+.boton {
+    margin-bottom: 2rem;
+    border: none;
+    color: white;
+    display: inline-block;
+    font-weight: 700;
+    margin-top: 2.5rem;
     padding: 1rem 3rem;
     text-align: center;
     text-decoration: none;
@@ -165,7 +180,21 @@ tr:nth-child(even) {
     padding: 1rem 3rem;
     text-align: center;
     text-decoration: none;
+    cursor: pointer;
 }
+
+.boton-gris {
+
+    background-color: gray;
+    color: #000000;
+
+}
+
+.color-red {
+    background-color: red;
+}
+
+
 
 table.ventas {
     border-spacing: 0;
@@ -180,6 +209,10 @@ table.ventas thead {
 table.ventas thead th {
     color: white;
     padding: 2rem;
+}
+
+table#TablaUsuarios{
+    margin-top: 5rem;
 }
 
 .w-100 {
@@ -200,6 +233,18 @@ table.ventas thead th {
     text-transform: uppercase;
 }
 
+.boton-rojo-block-nuevo {
+    background-color: red;
+    border: none;
+    color: white;
+    display: block;
+    font-weight: 700;
+    padding: 1rem 3rem;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
 .boton-naranja-block {
     background-color: orange;
     border: none;
@@ -211,6 +256,19 @@ table.ventas thead th {
     text-align: center;
     text-decoration: none;
     width: 100%;
+    text-transform: uppercase;
+}
+
+.boton-naranja-block-nuevo{
+    background-color: orange;
+    border: none;
+    color: white;
+    display: block;
+    font-weight: 700;
+    margin-top: 2.5rem;
+    padding: 1rem 3rem;
+    text-align: center;
+    text-decoration: none;
     text-transform: uppercase;
 }
 
@@ -346,7 +404,7 @@ form .boton-amarillo {
     overflow: scroll;
 }
 
-.link-sidebar{
+.link-sidebar {
     background-color: #bbbaba;
     padding: 1rem;
     border-radius: 1rem;
@@ -356,7 +414,7 @@ form .boton-amarillo {
     align-items: center;
 }
 
-p.texto-sidebar{
+p.texto-sidebar {
     color: #000000;
     font-size: 2rem;
     font-weight: bold;
@@ -364,13 +422,13 @@ p.texto-sidebar{
     margin-bottom: 0;
 }
 
-.dashboard-cards{
+.dashboard-cards {
     display: grid;
     gap: 2rem;
     grid-template-columns: repeat(2, 1fr);
 }
 
-.card{
+.card {
     display: flex;
     flex-direction: column;
     background-color: #5cf45c;
@@ -378,26 +436,48 @@ p.texto-sidebar{
     text-align: center;
 }
 
-.h2-card{
+.h2-card {
     text-transform: uppercase;
     font-weight: bold;
     font-size: 2rem;
     margin-bottom: 0;
 }
 
-.p-card{
+.p-card {
     font-size: 2rem;
     margin: 0;
     text-transform: uppercase;
 }
 
-.foto-mochila-adm{
+.foto-mochila-adm {
     width: 15rem;
     height: 15rem;
     padding: 1rem;
 }
 
-.mochila-editar{
+.mochila-editar {
     width: 30rem;
     height: 30rem;
 }
+
+
+.dt-button {
+    margin-right: 1rem;
+    margin-bottom: 2rem;
+    border: none;
+    color: black;
+    display: inline-block;
+    font-size: 2rem;
+    font-weight: 700;
+    padding: 1rem 3rem;
+    text-align: center;
+    text-decoration: none;
+    background-color: dodgerblue;   
+    cursor: pointer;
+}
+
+.texto-exportar{
+    font-weight: bold;
+    margin: 0;
+}
+

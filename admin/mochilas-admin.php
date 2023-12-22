@@ -7,6 +7,18 @@
     <link rel="stylesheet" href="../css/estilos-admin.css">
     <link rel="stylesheet" href="../css/normalizer.css">
 
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+    <script src="../functions/app.js"></script>
+
     <title>TodoMochilasADM | Mochilas</title>
 </head>
 
@@ -20,19 +32,29 @@
     include_once '../templates/header-admin.php';
     include_once '../templates/sidebar-admin.php';
 
+    //administrador de mochilas
+    //verifica si esta autenticado
     isAuth();
 
     //Se carga el listado de mochilas
 
     $conexion = conectarDDBB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
-    $resultado = eliminarElemento($idEliminar, $_GET['idEliminar'], 'mochila', 'id_mochila', $conexion);
+    $idEliminar = '';
+
+    if (isset($_GET['idEliminar'])) {
+
+        //elimina un elemento
+        $resultado = eliminarElemento($idEliminar, $_GET['idEliminar'], 'mochila', 'id_mochila', $conexion);
+    }
+
 
 
     ?>
 
 
 
+    <!-- comienza a mostrar -->
     <main class="contenedor seccion">
         <h1 class="titulo-table">Administrador de mochilas</h1>
 
@@ -40,13 +62,21 @@
 
         <?php
 
-        verificarEliminacion($resultado, $conexion, 'mochila');
+        if (isset($_GET['idEliminar'])) {
+
+            //verifica la eliminacion
+            verificarEliminacion($resultado, $conexion, 'mochila');
+        }
+
+
 
         ?>
 
         <a href="./formulario-admin.php?form=mochila" class="boton boton-verde">Nueva Mochila</a>
 
-        <table class="ventas">
+        <!-- comienza la tabla -->
+        <table class="ventas" id="TablaUsuarios">
+            <p class="texto-exportar">Exportar datos:</p>
             <thead>
                 <tr>
                     <th>ID</th>
@@ -63,13 +93,10 @@
 
                 <?php
 
-                //Trae todo de la tabla mochila junto con la tabla de proveedor por la clave foranea
-                $query = "SELECT * FROM mochila INNER JOIN proveedor ON mochila.proveedor_id_proveedor = proveedor.id_proveedor ORDER BY id_mochila ASC";
+                //trae las mochilas para mostrar
+                $resultadoPaginacion = traerTodo('mochila', $conexion, "INNER JOIN proveedor ON mochila.proveedor_id_proveedor = proveedor.id_proveedor ORDER BY id_mochila ASC");
 
-                //la funcion paginar toma los datos de las tablas y devuelve dos valores que se asignan a las variables
-                list($totalPaginas, $resultadoPaginacion) = paginar(5, 'mochila', $conexion, $query);
-
-
+                
                 foreach ($resultadoPaginacion as $fila) { ?>
 
                     <tr>
@@ -84,8 +111,8 @@
                         <td>
                             <div class="w-100">
 
-                                <a href="#" onclick="confirmarEliminacion(<?php echo $fila['id_mochila']; ?>, '<?php echo $fila['nombre_mochila']; ?>')" class="boton-rojo-block">ELIMINAR PRODUCTO</a>
-                                <a href="./formulario-admin.php?form=mochila&id=<?php echo $fila['id_mochila'] ?>" class="boton-naranja-block">VER / ACTUALIZAR PRODUCTO</a>
+                                <a href="#" onclick="confirmarEliminacion(<?php echo $fila['id_mochila']; ?>, '<?php echo $fila['nombre_mochila']; ?>')" class="boton-rojo-block-nuevo">ELIMINAR PRODUCTO</a>
+                                <a href="./formulario-admin.php?form=mochila&id=<?php echo $fila['id_mochila'] ?>" class="boton-naranja-block-nuevo">VER / ACTUALIZAR PRODUCTO</a>
 
                             </div>
                         </td>
@@ -101,10 +128,7 @@
         </table>
 
 
-        <div class="indices">
-            <!-- se cargan los indices -->
-            <?php indices($totalPaginas); ?>
-        </div>
+        
 
 
 
@@ -119,6 +143,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function confirmarEliminacion(idEliminar, nombreEliminar) {
+
+        //funcion para la eliminacion mediante el id
 
         Swal.fire({
             title: "¿Estas seguro?",

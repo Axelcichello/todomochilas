@@ -22,6 +22,7 @@
 
     $conexion = conectarDDBB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
+    //Muestro el producto que mando por formulario
 
     $id = $_POST['id'];
 
@@ -29,10 +30,14 @@
 
     $resultado = mysqli_query($conexion, $sql);
 
+    //Si lo encuentro lo guardo en un array
+
     if(mysqli_num_rows($resultado) > 0){
 
         $producto = mysqli_fetch_assoc($resultado);
     }else{
+
+        //Si no lo enfcuentro mando un error
 
         array_push($errores, "Producto inexistente");
         notificarErrores($errores);
@@ -40,6 +45,8 @@
 
 
     ?>
+
+    <!-- muestro el producto -->
 
     <main class="contenedor">
         <h1><?php echo $producto['nombre_mochila'] ?></h1>

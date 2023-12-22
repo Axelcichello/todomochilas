@@ -21,13 +21,15 @@
     <main class="contenedor">
         <h1 class="subtitulo">Contacto</h1>
 
-        <form method="POST" action="notificacion.php" class="formulario" onsubmit="return validarFormulario();">
+        <!-- Formulario de contacto para clientes -->
+
+        <form method="POST" action="notificacion.php" enctype="multipart/form-data" class="formulario" onsubmit="return validarFormulario();">
 
             <fieldset>
                 <legend>Informacion de contacto</legend>
 
                 <label for="nombre">Nombre</label>
-                <input type="text" name="nombre" id="nombre" placeholder="Ingrese su nomobre">
+                <input type="text" name="nombre" id="nombre" placeholder="Ingrese su nombre">
 
                 <label for="apellido">Apellido</label>
                 <input type="text" id="apellido" placeholder="Ingrese su apellido" name="apellido">
@@ -89,13 +91,15 @@
 </body>
 
 <script>
+    
     function validarFormulario() {
+
+        //Validacion en JS se cargan todos los elementos en la variable y se verifica que no esten vacios
         const nombre = document.getElementById("nombre").value;
         const apellido = document.getElementById("apellido").value;
         const telefono = document.getElementById("telefono").value;
         const email = document.getElementById("email").value;
         const mensaje = document.getElementById("mensaje").value;
-        // const talle = document.getElementById("mochila").value;
 
         if (nombre.trim() === "") {
             alert("Por favor, ingrese su nombre");
@@ -160,6 +164,8 @@
     tyc.addEventListener("change", validaCheckbox);
 
     function validaCheckbox() {
+
+        //Togle para el checkbox cambias las clases y atributo disabled
         var checked = tyc.checked;
 
         if (checked) {

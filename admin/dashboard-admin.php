@@ -13,6 +13,8 @@
 
     <?php
 
+    //muestro un pequeño dashboard inicial
+
 
     include_once '../functions/config.php';
     include_once '../functions/funciones.php';
@@ -24,6 +26,7 @@
     $conexion = conectarDDBB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
 
+    //verifico si el usuario esta autenticado
     isAuth();
 
     ?>

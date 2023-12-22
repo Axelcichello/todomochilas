@@ -1,3 +1,5 @@
+<!-- header de admin -->
+
 <header class="header">
     <div class="contenedor contenido-header">
         <div class="barra">

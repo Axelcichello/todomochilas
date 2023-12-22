@@ -7,6 +7,18 @@
     <link rel="stylesheet" href="../css/estilos-admin.css">
     <link rel="stylesheet" href="../css/normalizer.css">
 
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+    <script src="../functions/app.js"></script>
+
     <title>TodoMochilasADM | Proveedores</title>
 </head>
 
@@ -22,21 +34,28 @@
     include_once '../templates/header-admin.php';
     include_once '../templates/sidebar-admin.php';
 
+    //administrador de mochilas
+    //verifica si esta autenticado
+
     isAuth();
 
-
+    //Se carga el listado de mochilas
 
     $conexion = conectarDDBB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
+    $idEliminar = '';
 
-    $resultado = eliminarElemento($idEliminar, $_GET['idEliminar'], 'proveedor', 'id_proveedor', $conexion);
 
+    if (isset($_GET['idEliminar'])) {
 
+        //elimina un elemento
+        $resultado = eliminarElemento($idEliminar, $_GET['idEliminar'], 'proveedor', 'id_proveedor', $conexion);
+    }
 
     ?>
 
 
-
+    <!-- comienza a mostrar -->
     <main class="contenedor seccion">
         <h1 class="titulo-table">Administrador de Proveedores</h1>
 
@@ -44,7 +63,12 @@
         <?php
 
 
-        verificarEliminacion($resultado, $conexion, 'proveedor');
+        if (isset($_GET['idEliminar'])) {
+
+            //verifica la eliminacion
+            verificarEliminacion($resultado, $conexion, 'proveedor');
+        }
+
 
 
 
@@ -53,8 +77,9 @@
 
         <a href="./formulario-admin.php?form=proveedor" class="boton boton-verde">Nuevo Proveedor</a>
 
-
-        <table class="ventas">
+        <!-- comienza la tabla -->
+        <table class="ventas" id="TablaUsuarios">
+            <p class="texto-exportar">Exportar datos:</p>
             <thead>
                 <tr>
                     <th>ID</th>
@@ -72,8 +97,10 @@
 
                 <?php
 
-                $query = "SELECT * FROM proveedor ORDER BY id_proveedor ASC";
-                list($totalPaginas, $resultadoPaginacion) = paginar(5, 'proveedor', $conexion, $query);
+                //trae los proveedores para mostrar
+                $resultadoPaginacion = traerTodo('proveedor', $conexion, '');
+
+
 
                 foreach ($resultadoPaginacion as $fila) { ?>
 
@@ -86,9 +113,9 @@
 
                         <td>
                             <div class="w-100">
-                                <a onclick="confirmarEliminacion(<?php echo $fila['id_proveedor']; ?>, '<?php echo $fila['nombre_proveedor']; ?>')" class="boton-rojo-block">ELIMINAR proveedor</a>
+                                <a onclick="confirmarEliminacion(<?php echo $fila['id_proveedor']; ?>, '<?php echo $fila['nombre_proveedor']; ?>')" class="boton-rojo-block-nuevo">ELIMINAR proveedor</a>
 
-                                <a href="./formulario-admin.php?form=proveedor&id=<?php echo $fila['id_proveedor'] ?>" class="boton-naranja-block">VER / ACTUALIZAR proveedor</a>
+                                <a href="./formulario-admin.php?form=proveedor&id=<?php echo $fila['id_proveedor'] ?>" class="boton-naranja-block-nuevo">VER / ACTUALIZAR proveedor</a>
                             </div>
                         </td>
                     </tr>
@@ -104,9 +131,7 @@
         </table>
 
 
-        <div class="indices">
-            <?php indices($totalPaginas); ?>
-        </div>
+
 
 
     </main>
@@ -119,6 +144,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function confirmarEliminacion(idEliminar, nombreEliminar) {
+
+        //funcion para la eliminacion mediante el id
 
         Swal.fire({
             title: "¿Estas seguro?",

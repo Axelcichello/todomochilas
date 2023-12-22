@@ -29,12 +29,13 @@
 
             <?php
 
+            //Traigo mediante la funcion de traerTodo las mochilas para verlo en la galeria
 
             $conexion = conectarDDBB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
             $mochilas = traerTodo('mochila', $conexion, '');
 
-
+            //Recorro el array de las mochilas
             foreach ($mochilas as $mochila) { ?>
 
                 <form class="producto" method="POST" action="producto.php">

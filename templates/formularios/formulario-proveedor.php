@@ -4,6 +4,9 @@
 
 if (isset($_GET['id'])) {
 
+    //Funcion para cargar los datos para editar
+
+
     $agregado = "";
     $idBuscar = $_GET['id'];
 
@@ -69,6 +72,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             notificarErrores($errores);
         } else {
 
+            //etapa de registro
+
             $query = "INSERT INTO proveedor (nombre_proveedor, telefono_proveedor, correo_proveedor , direccion_proveedor, localidad_proveedor) VALUES ('{$nombre}', '{$telefono}', '{$correo}', '{$direccion}', '{$localidad}')";
 
             $respuesta = mysqli_query($conexion, $query);
@@ -79,6 +84,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
     } else {
+
+        //esta es la parte de ediciopn
+        //muestra errores si los hay
 
         if (count($errores) > 0) {
             notificarErrores($errores);
@@ -97,6 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
+<!-- muestra el titulo de editar o registrar segun sea el caso -->
 
 
 <?php if (isset($idBuscar)) { ?>
@@ -106,48 +115,55 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <h2 class="subtitulo">REGISTRAR proveedor</h2>
 <?php } ?>
 
+<!-- si es una edicion va a mostrar el boton para editar -->
 
-<?php echo isset($_GET['id']) ? '<button class="boton-editar" onclick="editar()" type="button">EDITAR PROVEEDOR</button>' : ''; ?>
+<?php echo isset($_GET['id']) ? '<button class="boton-editar" id="editarBoton" onclick="editar()" type="button">EDITAR PROVEEDOR</button>' : ''; ?>
 
 
 <?php if (isset($idBuscar)) { ?>
+    <!-- carga el formulario segun sea de edicion o de registro -->
 
-    <form action="./formulario-admin.php?form=proveedor&id=<?php echo $_GET['id'] ?>" method="POST" class="formulario">
+
+    <form id="formG" action="./formulario-admin.php?form=proveedor&id=<?php echo $_GET['id'] ?>" method="POST" class="formulario" onsubmit="return validarFormulario();">
 
 
     <?php } else { ?>
 
-        <form action="./formulario-admin.php?form=proveedor" method="POST" class="formulario">
+        <form id="formG" action="./formulario-admin.php?form=proveedor" method="POST" class="formulario" onsubmit="return validarFormulario();">
 
         <?php } ?>
 
-
+        <!-- 
+        si es un registro no se van a mostrar datos en los inputs
+        si es una edicion los campos van a estar rellenos con la info que se quiera ver o actualizar y se debera tocar en editar para que sea editable -->
         <fieldset>
             <legend>Informacion General del Proveedor</legend>
 
 
             <label for="nombre">Nombre del proveedor</label>
-            <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="text" value="<?php echo (isset($_GET) ? $buscado[0]['nombre_proveedor'] : "") ?>" name="nombre" id="nombre" placeholder="Ingrese nombre del proveedor">
+            <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="text" value="<?php echo (isset($_GET['id']) ? $buscado[0]['nombre_proveedor'] : "") ?>" name="nombre" id="nombre" placeholder="Ingrese nombre del proveedor">
 
             <label for="telefono">Telefono del proveedor</label>
-            <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="number" value="<?php echo (isset($_GET) ? $buscado[0]['telefono_proveedor'] : "") ?>" name="telefono" id="telefono" placeholder="Ingrese telefono del proveedor">
+            <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="number" value="<?php echo (isset($_GET['id']) ? $buscado[0]['telefono_proveedor'] : "") ?>" name="telefono" id="telefono" placeholder="Ingrese telefono del proveedor">
 
             <label for="email">Correo electronico del proveedor</label>
-            <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="email" value="<?php echo (isset($_GET) ? $buscado[0]['correo_proveedor'] : "") ?>" name="correo" id="email" placeholder="Ingrese correo del proveedor">
+            <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="email" value="<?php echo (isset($_GET['id']) ? $buscado[0]['correo_proveedor'] : "") ?>" name="correo" id="email" placeholder="Ingrese correo del proveedor">
 
             <label for="direccion">Direccion del proveedor</label>
-            <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="text" value="<?php echo (isset($_GET) ? $buscado[0]['direccion_proveedor'] : "") ?>" name="direccion" id="direccion" placeholder="Ingrese direccion del proveedor">
+            <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="text" value="<?php echo (isset($_GET['id']) ? $buscado[0]['direccion_proveedor'] : "") ?>" name="direccion" id="direccion" placeholder="Ingrese direccion del proveedor">
 
             <label for="localidad">Localidad del proveedor</label>
-            <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="text" value="<?php echo (isset($_GET) ? $buscado[0]['localidad_proveedor'] : "") ?>" name="localidad" id="localidad" placeholder="Ingrese localidad del proveedor">
+            <input <?php echo isset($_GET['id']) ? 'disabled' : '' ?> type="text" value="<?php echo (isset($_GET['id']) ? $buscado[0]['localidad_proveedor'] : "") ?>" name="localidad" id="localidad" placeholder="Ingrese localidad del proveedor">
 
 
 
         </fieldset>
 
+        <!-- muestro el submit segun sea editar o registrar -->
+
 
         <?php if (isset($idBuscar)) { ?>
-            <input type="submit" class="boton boton-verde" value="ACTUALIZAR PROVEEDOR">
+            <input type="submit" disabled class="boton boton-gris" value="ACTUALIZAR PROVEEDOR">
         <?php } else { ?>
             <input type="submit" class="boton boton-verde" value="REGISTRAR PROVEEDOR">
         <?php } ?>

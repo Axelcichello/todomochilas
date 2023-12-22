@@ -1,3 +1,5 @@
+<!-- footer de la parte de clientes -->
+
 <footer class="footer">
     <div class="contenedor">
         <nav class="navegacion">

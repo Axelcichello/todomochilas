@@ -30,6 +30,8 @@
 
         <div class="iconos-conocenos">
 
+            <!-- Muestra iconos con los valores del emprendimiento -->
+
             <div class="icono">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-receipt-2" width="84" height="84" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffbf00" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -76,6 +78,8 @@
         </div>
     </main>
 
+    <!-- banner de mochilas -->
+
     <section class="seccion-imagen">
         <h2 class="encabezado">¿Estas buscando la mochila ideal?</h2>
         <p class="subencabezado">Consultanos por nuestros modelos personalizados y a medida</p>
@@ -86,28 +90,29 @@
     <section class="contenedor">
         <h2 class="subtitulo">modelos mas vendidos</h2>
 
+        <!-- muestro los tres modelos mas vendidos mediante php y sql -->
+
         <div class="contenedor-anuncios">
 
             <?php
 
-            $sql = "SELECT * FROM mochila ORDER BY precio_mochila DESC LIMIT 3";
+            //Traigo las tres mochilas mas caras
+            $resultado = traerTodo('mochila', $conexion, 'ORDER BY precio_mochila DESC LIMIT 3');
 
-            $resultado = mysqli_query($conexion, $sql);
-
-           
-            while ($datos = mysqli_fetch_assoc($resultado)) { ?>
+            //Las muestro en un array
+            foreach ($resultado as $mochila) { ?>
 
 
-            <div class="anuncio">
-                <img class="anuncio-foto" src="img/mochilas/<?php echo $datos['foto_mochila'] ?>" alt="anuncio">
-                <div class="contenido-anuncio">
-                    <h3><?php echo $datos['nombre_mochila'] ?></h3>
-                    <p><?php echo $datos['descripcion_mochila'] ?></p>
-                    <p class="precio">$<?php echo $datos['precio_mochila'] ?></p>
-                    <a href="galeria.php" class="boton-amarillo">Ver galeria</a>
-                    
+                <div class="anuncio">
+                    <img class="anuncio-foto" src="img/mochilas/<?php echo $mochila['foto_mochila'] ?>" alt="anuncio">
+                    <div class="contenido-anuncio">
+                        <h3><?php echo $mochila['nombre_mochila'] ?></h3>
+                        <p><?php echo $mochila['descripcion_mochila'] ?></p>
+                        <p class="precio">$<?php echo $mochila['precio_mochila'] ?></p>
+                        <a href="galeria.php" class="boton-amarillo">Ver galeria</a>
+
+                    </div>
                 </div>
-            </div>
 
             <?php } ?>
 
@@ -123,59 +128,64 @@
 
     <section class="contenedor">
 
+        <!-- muestro una pequeña lista de precios -->
         <h2 class="subtitulo">Listado de Precios Actualizado</h2>
         <p class="txt-precios">Los precios se encuentra siempre actualizado. LLevando mas de 5 productos accedes a
             promociones unicas</p>
 
         <div class="precios">
             <div class="lista">
+
+
+
+
                 <ul class="articulos">
-                    <li class="articulo">
-                        <p class="articulo-nombre">Mochila Escolar P/ Universidad</p>
-                        <p class="articulo-precio">$6300</p>
-                    </li>
-                    <li class="articulo">
-                        <p class="articulo-nombre">Mochila Everlast Deportiva</p>
-                        <p class="articulo-precio">$5500</p>
-                    </li>
-                    <li class="articulo">
-                        <p class="articulo-nombre">Mochila Anti Robo Talle Unico</p>
-                        <p class="articulo-precio">$8500</p>
-                    </li>
-                    <li class="articulo">
-                        <p class="articulo-nombre">Mochila Everlast Deportiva</p>
-                        <p class="articulo-precio">$5500</p>
-                    </li>
-                    <li class="articulo">
-                        <p class="articulo-nombre">Mochila Basica</p>
-                        <p class="articulo-precio">$3900</p>
-                    </li>
+
+
+                    <?php
+                    //Traigo las 5 mochilas mas caras
+                    $resultado = traerTodo('mochila', $conexion, 'ORDER BY precio_mochila DESC LIMIT 5');
+
+                    //Las muestro en pantalla
+                    foreach ($resultado as $dato) { ?>
+
+                        <li class="articulo">
+                            <p class="articulo-nombre"><?php echo $dato['nombre_mochila'] ?></p>
+                            <p class="articulo-precio">$<?php echo $dato['precio_mochila'] ?></p>
+                        </li>
+
+                    <?php } ?>
+
 
                 </ul>
+
             </div>
 
             <div class="lista">
                 <ul class="articulos">
+
+                    <?php
+
+                    //Traigo las 5 mochilas mas baratas
+                    $resultado = traerTodo('mochila', $conexion, 'ORDER BY precio_mochila ASC LIMIT 4');
+
+                    //Las muestro en pantalla
+                    foreach ($resultado as $dato) { ?>
+
+                        <li class="articulo">
+                            <p class="articulo-nombre"><?php echo $dato['nombre_mochila'] ?></p>
+                            <p class="articulo-precio">$<?php echo $dato['precio_mochila'] ?></p>
+                        </li>
+
+                    <?php } ?>
+
                     <li class="articulo">
-                        <p class="articulo-nombre">Mochila Running</p>
-                        <p class="articulo-precio">$4100</p>
-                    </li>
-                    <li class="articulo">
-                        <p class="articulo-nombre">morral</p>
-                        <p class="articulo-precio">$3000</p>
-                    </li>
-                    <li class="articulo">
-                        <p class="articulo-nombre">Mochila Porta Notebook XL</p>
-                        <p class="articulo-precio">$8000</p>
-                    </li>
-                    <li class="articulo">
-                        <p class="articulo-nombre">Mochila Porta Notebook S</p>
-                        <p class="articulo-precio">$7100</p>
-                    </li>
-                    <li class="articulo">
+
+                        <!-- muestro una item que envia a la pagina de contacto para un asunto personalizado -->
                         <p class="articulo-nombre">Mochila estampado a pedido</p>
                         <p class="articulo-precio"><a href="contacto.php">CONSULTAR</a></p>
                     </li>
+
                 </ul>
             </div>
         </div>

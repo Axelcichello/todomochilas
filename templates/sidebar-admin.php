@@ -1,3 +1,5 @@
+<!-- sidebar de admin -->
+
 <aside class="sidebar">
 
     <a href="dashboard-admin.php">
